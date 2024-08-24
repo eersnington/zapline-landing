@@ -64,11 +64,11 @@ const Section = ({
 
   return (
     <motion.div
-      className="h-screen w-full flex items-center justify-center sticky top-0"
+      className="h-screen w-full flex items-center justify-center sticky top-0 rounded-lg bg-grey"
       style={{ y }}
     >
       <motion.div
-        className="w-full max-w-7xl mx-auto h-[80vh] rounded-[25px] p-8 md:p-16 flex flex-col justify-center"
+        className="w-full max-w-7xl mx-auto h-[80vh] rounded-[25px] p-8 md:p-16 flex flex-col justify-center "
         initial={{ opacity: 0, y: 50 }}
         style={{
           background: `linear-gradient(${section.gradientDirection}, #8B5CF6, #FFA07A)`,

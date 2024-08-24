@@ -33,7 +33,7 @@ const TextColumn: React.FC = () => (
 export const Briefer: React.FC = () => {
   return (
     <div className="w-full max-w-6xl mx-auto mt-16 px-4">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8 h-[32rem]">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-8 h-[32rem] ">
         <div className="w-full md:w-2/3 h-full">
           <VideoFrame />
         </div>
