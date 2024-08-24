@@ -10,8 +10,8 @@ export default function Home() {
         <Hero />
         <Briefer />
       </section>
-      <StackedSections />
       <BenefitsShowcase />
+      <StackedSections />
     </div>
   );
 }

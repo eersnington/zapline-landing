@@ -11,21 +11,21 @@ interface Section {
 
 const sections: Section[] = [
   {
-    title: "Section One",
+    title: "Simple setup in 1 hour",
     description:
-      "This is the description for section one. It can be a brief overview or a longer explanation of the content.",
+      "Create the knowledge base and connect your existing apps to build powerful, automated workflows.",
     gradientDirection: "to right",
   },
   {
-    title: "Section Two",
+    title: "Full resolutions in under 1 minute",
     description:
-      "Section two's description goes here. You can customize this text to fit your needs and provide relevant information.",
+      "Our Voice AI communicates seamlessly between your apps, accessing and updating information in real-time. Say goodbye to lenghty back-and-forth and hello to one-minute resolutions.",
     gradientDirection: "to bottom right",
   },
   {
-    title: "Section Three",
+    title: "High quality responses within your control",
     description:
-      "The third section's description. This could be about a project, a service, or any other topic you'd like to highlight.",
+      "Review and coach the AI to improve accuracy and provide the best customer experience.",
     gradientDirection: "to bottom",
   },
 ];
@@ -62,27 +62,44 @@ const Section = ({
 }) => {
   const y = useTransform(progress, [0, 1], [0, -50 * index]);
 
+  const getSectionSize = (index: number) => {
+    switch (index) {
+      case 0:
+        return "w-full h-screen";
+      case 1:
+        return "w-[90%] h-[90vh]";
+      case 2:
+        return "w-[80%] h-[80vh]";
+      default:
+        return "w-full h-screen";
+    }
+  };
+
   return (
     <motion.div
-      className="h-screen w-full flex items-center justify-center sticky top-0 rounded-2xl bg-black"
+      className={`flex items-center justify-center sticky top-0 ${getSectionSize(
+        index
+      )}`}
       style={{ y }}
     >
       <motion.div
-        className="w-full max-w-7xl mx-auto h-[80vh] rounded-[25px] p-8 md:p-16 flex flex-col justify-center "
+        className={`w-full h-full rounded-[25px] p-8 md:p-16 flex flex-col justify-center ${
+          index > 0 ? "mx-auto" : ""
+        }`}
         initial={{ opacity: 0, y: 50 }}
         style={{
           background: `linear-gradient(${section.gradientDirection}, #8B5CF6, #FFA07A)`,
-          top: `calc(-5vh + ${index * 25}px)`,
         }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
         whileInView={{ opacity: 1, y: 0 }}
       >
-        <h2 className="text-center text-4xl md:text-5xl font-bold mb-8 text-white">
-          {section.title}
-        </h2>
+        {/* Section content */}
         <div className="flex flex-col md:flex-row h-full gap-8">
-          <div className="w-full md:w-2/5 flex items-center">
-            <p className="text-lg md:text-xl text-white first-letter:text-4xl first-letter:font-serif">
+          <div className="w-full md:w-2/5 flex flex-col justify-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+              {section.title}
+            </h2>
+            <p className="text-lg md:text-xl text-white">
               {section.description}
             </p>
           </div>

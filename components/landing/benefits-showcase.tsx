@@ -8,25 +8,24 @@ import { Skeleton } from "@nextui-org/skeleton";
 const benefits = [
   {
     title: "Automate 60% of Customer Queries",
-    description:
-      "Zapline's voice AI efficiently handles the majority of customer inquiries.",
+    description: "Focus on what humans do best and let AI handle the rest",
     color: "bg-purple-400",
   },
   {
-    title: "24/7 Conversational Experience",
-    description:
-      "Provide round-the-clock support to your customers with Zapline's voice AI.",
+    title: "Resolve Queries in <1min",
+    description: "Respond to customer queries faster than ever before.",
     color: "bg-blue-400",
   },
   {
-    title: "Tailored for E-commerce",
-    description: "Zapline is specifically designed for Shopify stores.",
+    title: "Built for E-commerce",
+    description: "Tailored to the needs of handling support tickets.",
     color: "bg-green-400",
   },
   {
     title: "Predefined Actions for Smooth Operations",
     description:
-      "Streamline your customer service with Zapline's predefined actions.",
+      // write something like forget about repetive tasks after setting it up once
+      "Set up once and forget about repetitive tasks.",
     color: "bg-yellow-400",
   },
 ];

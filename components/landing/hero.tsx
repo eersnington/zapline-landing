@@ -1,5 +1,7 @@
 import React from "react";
 import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { Sparkles, Users } from "lucide-react";
 
 import {
   title as titleStyles,
@@ -8,12 +10,15 @@ import {
 
 export const Hero: React.FC = () => {
   return (
-    <section className="flex flex-col items-center justify-center w-full">
-      <div className="inline-block max-w-4xl">
-        <div className="mb-6">
-          <span className="bg-black text-white px-6 py-2 rounded-full text-sm font-semibold">
-            AI-Powered Customer Support for Shopify
-          </span>
+    <section className="flex flex-col items-center justify-center w-full px-4 py-8">
+      <div className="inline-block max-w-4xl text-center">
+        <div className="mb-8 flex justify-center">
+          <div className="bg-black text-gray-100 px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-2 max-w-fit">
+            <span className="text-sm font-bold whitespace-nowrap">
+              Automate 60% of your support
+            </span>
+            <Sparkles className="text-purple-500 animate-pulse" size={24} />
+          </div>
         </div>
         <div className="my-12">
           <h1
@@ -22,36 +27,38 @@ export const Hero: React.FC = () => {
               class: "text-black leading-tight",
             })}
           >
-            Revolutionize Your Shopify Store <br /> with Intelligent Voice AI
+            Immediately resolve customer queries with Voice AI
           </h1>
         </div>
         <h2
           className={subtitleStyles({
-            class: "max-w-3xl mx-auto text-gray-700 text-xl",
+            class: "max-w-2xl mx-auto text-gray-700 text-xl mb-12",
           })}
         >
-          Automate 70% of customer queries and provide a 24/7 conversational
-          experience that delights shoppers and boosts sales. Elevate your
-          e-commerce game with voice AI.
+          Provide your customers with an effortless support experience—our AI
+          voice agent offers quick, accessible assistance that outperforms chat.
         </h2>
-      </div>
-      <div className="flex flex-col sm:flex-row gap-4 mt-8">
-        <Button
-          className="bg-black text-white hover:bg-gray-800 px-8 py-6 text-lg font-semibold"
-          color="default"
-          size="lg"
-          variant="solid"
-        >
-          Join Waitlist
-        </Button>
-        <Button
-          className="bg-[#ffbe86] text-black hover:bg-[#ffcba4] px-8 py-6 text-lg font-semibold"
-          color="primary"
-          size="lg"
-          variant="flat"
-        >
-          Watch 1-Min Demo
-        </Button>
+        <div className="flex items-center justify-center mb-6 text-gray-600">
+          <span className="text-sm font-semibold">
+            👋 Join 149 store owners on the waitlist
+          </span>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Input
+            className="w-full sm:w-96"
+            placeholder="Enter your work email"
+            size="lg"
+            type="email"
+          />
+          <Button
+            className="bg-[#ffbe86] text-black hover:bg-[#ffcba4] px-8 py-6 text-lg font-semibold"
+            color="primary"
+            size="lg"
+            variant="flat"
+          >
+            Get Notified
+          </Button>
+        </div>
       </div>
     </section>
   );
