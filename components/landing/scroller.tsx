@@ -64,7 +64,7 @@ const Section = ({
 
   return (
     <motion.div
-      className="h-screen w-full flex items-center justify-center sticky top-0 rounded-lg bg-grey"
+      className="h-screen w-full flex items-center justify-center sticky top-0 rounded-2xl bg-black"
       style={{ y }}
     >
       <motion.div
