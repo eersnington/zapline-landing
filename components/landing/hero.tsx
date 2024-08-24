@@ -8,7 +8,7 @@ import {
 
 export const Hero: React.FC = () => {
   return (
-    <>
+    <section className="flex flex-col items-center justify-center w-full">
       <div className="inline-block max-w-4xl">
         <div className="mb-6">
           <span className="bg-black text-white px-6 py-2 rounded-full text-sm font-semibold">
@@ -53,6 +53,6 @@ export const Hero: React.FC = () => {
           Watch 1-Min Demo
         </Button>
       </div>
-    </>
+    </section>
   );
 };

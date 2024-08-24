@@ -27,11 +27,6 @@ export const viewport: Viewport = {
   ],
 };
 
-const gradientStyle = `
-  bg-[linear-gradient(90deg,#ffdab9,#e6f2ff,#e6ffe6,#ffffcc,#ffe6f2,#e6e6ff)]
-  hover:bg-[linear-gradient(90deg,#ffcba4,#ccebff,#ccffcc,#ffff99,#ffcceb,#ccccff)]
-`;
-
 export default function RootLayout({
   children,
 }: {
@@ -42,14 +37,14 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiase",
           fontSans.variable
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <div className="relative flex flex-col h-screen">
             <div
-              className={`w-full py-2 text-center font-bold ${gradientStyle}`}
+              className={`w-full py-2 text-center font-bold bg-gradient-to-br text-white from-gray-950 to-slate-700`}
             >
               Launching in 2 days
             </div>

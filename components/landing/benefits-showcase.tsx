@@ -36,32 +36,36 @@ export function BenefitsShowcase() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    const interval = 4000; // 4 seconds
+    const step = 100 / (interval / 50); // Update every 50ms
+
     const timer = setInterval(() => {
       setProgress((oldProgress) => {
-        if (oldProgress === 100) {
+        if (oldProgress + step >= 100) {
           setActiveIndex((prevIndex) => (prevIndex + 1) % benefits.length);
-
           return 0;
         }
-
-        return Math.min(oldProgress + 100 / 90, 100); // 90 frames in 3 seconds at 30fps
+        return oldProgress + step;
       });
-    }, 1000 / 30); // 30fps
+    }, 50);
 
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row justify-between items-start p-8 bg-gradient-to-br from-purple-200 to-[#f6d1b5] min-h-screen">
+    <div className="flex flex-col md:flex-row justify-between items-center p-8 bg-gradient-to-br from-purple-200 to-[#f6d1b5] min-h-screen">
       <div className="w-full md:w-1/2 space-y-6 pr-8">
         {benefits.map((benefit, index) => (
           <motion.div
             key={benefit.title}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{
+              opacity: index === activeIndex ? 1 : 0.6,
+              scale: index === activeIndex ? 1.05 : 1,
+            }}
             className={`p-6 rounded-lg shadow-lg transition-all duration-300 ${
               index === activeIndex ? "bg-white" : "bg-gray-100"
             }`}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0.6, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
             {index === activeIndex && (
@@ -83,10 +87,10 @@ export function BenefitsShowcase() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
-            animate={{ y: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
             className="w-full h-full"
-            exit={{ y: "-100%" }}
-            initial={{ y: "100%" }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 1.1 }}
             transition={{ duration: 0.5 }}
           >
             <Skeleton

@@ -1,6 +1,6 @@
 import { Briefer } from "@/components/landing/briefer";
 import { Hero } from "@/components/landing/hero";
-import { BenefitsShowcase } from "@/components/landing/scroll-reveal";
+import { BenefitsShowcase } from "@/components/landing/benefits-showcase";
 import StackedSections from "@/components/landing/scroller";
 
 export default function Home() {
