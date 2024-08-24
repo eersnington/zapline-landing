@@ -40,8 +40,10 @@ export function BenefitsShowcase() {
       setProgress((oldProgress) => {
         if (oldProgress === 100) {
           setActiveIndex((prevIndex) => (prevIndex + 1) % benefits.length);
+
           return 0;
         }
+
         return Math.min(oldProgress + 100 / 90, 100); // 90 frames in 3 seconds at 30fps
       });
     }, 1000 / 30); // 30fps
@@ -50,24 +52,24 @@ export function BenefitsShowcase() {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row justify-between items-start p-8 bg-gradient-to-br from-purple-100 to-peach-100 min-h-screen">
+    <div className="flex flex-col md:flex-row justify-between items-start p-8 bg-gradient-to-br from-purple-200 to-[#f6d1b5] min-h-screen">
       <div className="w-full md:w-1/2 space-y-6 pr-8">
         {benefits.map((benefit, index) => (
           <motion.div
             key={benefit.title}
+            animate={{ opacity: 1, y: 0 }}
             className={`p-6 rounded-lg shadow-lg transition-all duration-300 ${
               index === activeIndex ? "bg-white" : "bg-gray-100"
             }`}
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
             {index === activeIndex && (
               <Progress
                 aria-label="Loading..."
-                value={progress}
                 className="w-full h-1 mb-4"
                 color="secondary"
+                value={progress}
               />
             )}
             <h3 className="text-2xl font-bold mb-3 text-gray-800">
@@ -81,10 +83,10 @@ export function BenefitsShowcase() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
-            className="w-full h-full"
-            initial={{ y: "100%" }}
             animate={{ y: 0 }}
+            className="w-full h-full"
             exit={{ y: "-100%" }}
+            initial={{ y: "100%" }}
             transition={{ duration: 0.5 }}
           >
             <Skeleton

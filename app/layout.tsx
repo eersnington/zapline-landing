@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
-import { Link } from "@nextui-org/link";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
@@ -55,7 +54,7 @@ export default function RootLayout({
               Launching in 2 days
             </div>
             <Navbar />
-            <main className="container mx-auto flex-grow">{children}</main>
+            <main>{children}</main>
             <Footer />
           </div>
         </Providers>
