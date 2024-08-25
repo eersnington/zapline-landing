@@ -27,20 +27,20 @@ export const Hero: React.FC = () => {
               class: "text-black leading-tight",
             })}
           >
-            Have an Alexa-like voice bot that lives in your store
+            Elevate your CX with <br />
+            Alexa-like Voicebot
             {/* I need this h1 to be rephrased: Let customers solve their queries with Alexa like voice assistant in
             your store */}
           </h1>
         </div>
         <h2
           className={subtitleStyles({
-            class: "max-w-3xl mx-auto text-black text-xl mb-12",
+            class: "max-w-2xl mx-auto text-black text-4xl mb-12",
           })}
         >
-          Let customers resolve their queries with an Alexa-like voice bot that
-          manages orders, runs your custom workflows, and integrates with your
-          favorite apps. Delivering full resolutions in under a minute,
-          it&apos;s faster than any chatbot.
+          Let customers simply talk to get instant help on your store. Our
+          Alexa-like voicebot delivers complete resolutions in under a
+          minute—faster than any traditional chatbot.
         </h2>
         <div className="flex items-center justify-center mb-6 text-gray-600">
           <span className="text-sm font-semibold">
