@@ -16,21 +16,21 @@ const sections: Section[] = [
     description:
       "Create the knowledge base and connect your existing apps to build powerful, automated workflows.",
     gradientDirection: "to right",
-    width: "100%",
+    width: "98%",
   },
   {
     title: "Full resolutions in under 1 minute",
     description:
       "Our Voice AI communicates seamlessly between your apps, accessing and updating information in real-time.",
     gradientDirection: "to bottom right",
-    width: "95%",
+    width: "93%",
   },
   {
     title: "High quality responses within your control",
     description:
       "Review and coach the AI to improve accuracy and provide the best customer experience.",
     gradientDirection: "to bottom",
-    width: "90%",
+    width: "88%",
   },
 ];
 

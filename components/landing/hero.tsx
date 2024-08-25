@@ -27,7 +27,8 @@ export const Hero: React.FC = () => {
               class: "text-black leading-tight",
             })}
           >
-            Elevate your CX with <br />
+            Elevate your CX with an
+            <br />
             Alexa-like Voicebot
             {/* I need this h1 to be rephrased: Let customers solve their queries with Alexa like voice assistant in
             your store */}
