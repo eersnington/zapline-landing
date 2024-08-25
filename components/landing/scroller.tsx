@@ -1,12 +1,13 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 interface Section {
   title: string;
   description: string;
   gradientDirection: string;
+  width: string;
 }
 
 const sections: Section[] = [
@@ -15,18 +16,21 @@ const sections: Section[] = [
     description:
       "Create the knowledge base and connect your existing apps to build powerful, automated workflows.",
     gradientDirection: "to right",
+    width: "100%",
   },
   {
     title: "Full resolutions in under 1 minute",
     description:
-      "Our Voice AI communicates seamlessly between your apps, accessing and updating information in real-time. Say goodbye to lenghty back-and-forth and hello to one-minute resolutions.",
+      "Our Voice AI communicates seamlessly between your apps, accessing and updating information in real-time. Say goodbye to lengthy back-and-forth and hello to one-minute resolutions.",
     gradientDirection: "to bottom right",
+    width: "95%",
   },
   {
     title: "High quality responses within your control",
     description:
       "Review and coach the AI to improve accuracy and provide the best customer experience.",
     gradientDirection: "to bottom",
+    width: "90%",
   },
 ];
 
@@ -61,34 +65,35 @@ const Section = ({
   progress: any;
 }) => {
   const y = useTransform(progress, [0, 1], [0, -50 * index]);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-  const getSectionSize = (index: number) => {
-    switch (index) {
-      case 0:
-        return "w-full h-screen";
-      case 1:
-        return "w-[90%] h-[90vh]";
-      case 2:
-        return "w-[80%] h-[80vh]";
-      default:
-        return "w-full h-screen";
-    }
-  };
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (sectionRef.current) {
+        const width = sectionRef.current.offsetWidth;
+        setDimensions({ width, height: width });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
 
   return (
     <motion.div
-      className={`flex items-center justify-center sticky top-0 ${getSectionSize(
-        index
-      )}`}
-      style={{ y }}
+      className="flex items-center justify-center sticky top-0 w-full"
+      style={{ y, height: `${dimensions.height}px` }}
     >
       <motion.div
-        className={`w-full h-full rounded-[25px] p-8 md:p-16 flex flex-col justify-center ${
-          index > 0 ? "mx-auto" : ""
-        }`}
+        ref={sectionRef}
+        className="mx-auto rounded-[25px] p-8 md:p-16 flex flex-col justify-center overflow-hidden"
         initial={{ opacity: 0, y: 50 }}
         style={{
           background: `linear-gradient(${section.gradientDirection}, #8B5CF6, #FFA07A)`,
+          width: section.width,
+          height: "100%",
         }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
         whileInView={{ opacity: 1, y: 0 }}
