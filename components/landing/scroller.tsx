@@ -21,7 +21,7 @@ const sections: Section[] = [
   {
     title: "Full resolutions in under 1 minute",
     description:
-      "Our Voice AI communicates seamlessly between your apps, accessing and updating information in real-time. Say goodbye to lengthy back-and-forth and hello to one-minute resolutions.",
+      "Our Voice AI communicates seamlessly between your apps, accessing and updating information in real-time.",
     gradientDirection: "to bottom right",
     width: "95%",
   },

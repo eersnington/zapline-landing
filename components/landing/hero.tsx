@@ -23,20 +23,24 @@ export const Hero: React.FC = () => {
         <div className="my-12">
           <h1
             className={titleStyles({
-              size: "lg",
+              size: "xl",
               class: "text-black leading-tight",
             })}
           >
-            Immediately resolve customer queries with Voice AI
+            Have an Alexa-like voice bot that lives in your store
+            {/* I need this h1 to be rephrased: Let customers solve their queries with Alexa like voice assistant in
+            your store */}
           </h1>
         </div>
         <h2
           className={subtitleStyles({
-            class: "max-w-2xl mx-auto text-gray-700 text-xl mb-12",
+            class: "max-w-3xl mx-auto text-black text-xl mb-12",
           })}
         >
-          Provide your customers with an effortless support experience—our AI
-          voice agent offers quick, accessible assistance that outperforms chat.
+          Let customers resolve their queries with an Alexa-like voice bot that
+          manages orders, runs your custom workflows, and integrates with your
+          favorite apps. Delivering full resolutions in under a minute,
+          it&apos;s faster than any chatbot.
         </h2>
         <div className="flex items-center justify-center mb-6 text-gray-600">
           <span className="text-sm font-semibold">
