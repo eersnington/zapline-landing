@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.dynamic-bg-1 {
+  background: linear-gradient(-45deg, #ff0b7c, #f97272, #9333ea, #ff0b7c);
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
+}
+
+.dynamic-bg-2 {
+  background: linear-gradient(45deg, #f97272, #9333ea, #ff0b7c, #f97272);
+  background-size: 400% 400%;
+  animation: gradientFlow 20s ease infinite;
+}
+
+.dynamic-bg-3 {
+  background: radial-gradient(circle, #ff0b7c, #f97272, #9333ea);
+  background-size: 200% 200%;
+  animation: gradientFlow 25s ease infinite;
+}

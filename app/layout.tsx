@@ -1,13 +1,13 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
+import { GeistSans as Geist } from "geist/font/sans";
 
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
+import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer"; // Import the Footer component
 
 export const metadata: Metadata = {
   title: {
@@ -37,19 +37,19 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased bg-gradient-to-tl from-purple-200 to-[#f6d1b5]",
-          fontSans.variable
+          "min-h-screen bg-white font-sans antialiased",
+          Geist.className
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
-          <div className="relative flex flex-col h-screen">
-            <div
-              className={`w-full py-2 text-center font-bold bg-gradient-to-br text-white from-gray-950 to-slate-700`}
-            >
+          <div className="relative flex flex-col min-h-screen">
+            <div className="w-full py-2 text-center font-bold text-white bg-gradient-to-r from-[#ffbe86] to-[#bc72f9] via-[#F97272]">
               Launching in 2 days
             </div>
-            <Navbar />
-            <main>{children}</main>
+            <div className="bg-gradient-to-r from-[#fccde1] via-[#fcc2c2] to-[#e4befd]">
+              <Navbar />
+            </div>
+            <main className="flex-grow">{children}</main>
             <Footer />
           </div>
         </Providers>

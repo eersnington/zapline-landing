@@ -1,13 +1,12 @@
 "use client";
 
+import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
 
 interface Section {
   title: string;
   description: string;
   gradientDirection: string;
-  width: string;
 }
 
 const sections: Section[] = [
@@ -16,89 +15,87 @@ const sections: Section[] = [
     description:
       "Create the knowledge base and connect your existing apps to build powerful, automated workflows.",
     gradientDirection: "to right",
-    width: "98%",
   },
   {
     title: "Full resolutions in under 1 minute",
     description:
       "Our Voice AI communicates seamlessly between your apps, accessing and updating information in real-time.",
     gradientDirection: "to bottom right",
-    width: "93%",
   },
   {
     title: "High quality responses within your control",
     description:
       "Review and coach the AI to improve accuracy and provide the best customer experience.",
     gradientDirection: "to bottom",
-    width: "88%",
   },
 ];
 
-const StackedSections = () => {
+const StackedSections: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [windowHeight, setWindowHeight] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setWindowHeight(window.innerHeight);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
   return (
-    <div ref={containerRef} className="relative w-full">
-      {sections.map((section, i) => (
+    <div
+      ref={containerRef}
+      style={{ height: `${windowHeight * 3}px` }}
+      className="relative"
+    >
+      {sections.map((section, index) => (
         <Section
-          key={`s_${i}`}
-          index={i}
-          progress={scrollYProgress}
+          key={index}
           section={section}
+          index={index}
+          scrollYProgress={scrollYProgress}
+          windowHeight={windowHeight}
+          totalSections={sections.length}
         />
       ))}
     </div>
   );
 };
 
-const Section = ({
-  section,
-  index,
-  progress,
-}: {
+const Section: React.FC<{
   section: Section;
   index: number;
-  progress: any;
-}) => {
-  const y = useTransform(progress, [0, 1], [0, -50 * index]);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const sectionRef = useRef<HTMLDivElement>(null);
+  scrollYProgress: any;
+  windowHeight: number;
+  totalSections: number;
+}> = ({ section, index, scrollYProgress, windowHeight, totalSections }) => {
+  const scale = 1 - index * 0.05;
+  const y = useTransform(
+    scrollYProgress,
+    [index / totalSections, (index + 1) / totalSections],
+    [windowHeight, 0]
+  );
 
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (sectionRef.current) {
-        const width = sectionRef.current.offsetWidth;
-        setDimensions({ width, height: width });
-      }
-    };
-
-    updateDimensions();
-    window.addEventListener("resize", updateDimensions);
-    return () => window.removeEventListener("resize", updateDimensions);
-  }, []);
+  const gapSize = `${(index + 1) * 1}vw`;
 
   return (
     <motion.div
-      className="flex items-center justify-center sticky top-0 w-full"
-      style={{ y, height: `${dimensions.height}px` }}
+      className="top-0 left-0 right-0 bottom-0 flex items-center justify-center"
+      style={{ y }}
     >
       <motion.div
-        ref={sectionRef}
-        className="mx-auto rounded-[25px] p-8 md:p-16 flex flex-col justify-center overflow-hidden"
-        initial={{ opacity: 0, y: 50 }}
+        className="rounded-[25px] p-8 flex flex-col justify-center overflow-hidden"
         style={{
           background: `linear-gradient(${section.gradientDirection}, #8B5CF6, #FFA07A)`,
-          width: section.width,
-          height: "100%",
+          width: `calc(100% - ${gapSize})`,
+          height: `calc(98vh - ${gapSize})`,
+          scale: scale,
         }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        whileInView={{ opacity: 1, y: 0 }}
       >
-        {/* Section content */}
         <div className="flex flex-col md:flex-row h-full gap-8">
           <div className="w-full md:w-2/5 flex flex-col justify-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
