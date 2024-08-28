@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 
 interface Section {
   title: string;
   description: string;
-  gradientDirection: string;
+  icon: string;
+  gradientPosition: string;
 }
 
 const sections: Section[] = [
@@ -14,103 +15,75 @@ const sections: Section[] = [
     title: "Simple setup in 1 hour",
     description:
       "Create the knowledge base and connect your existing apps to build powerful, automated workflows.",
-    gradientDirection: "to right",
+    icon: "⚡",
+    gradientPosition: "50% 0%",
   },
   {
     title: "Full resolutions in under 1 minute",
     description:
       "Our Voice AI communicates seamlessly between your apps, accessing and updating information in real-time.",
-    gradientDirection: "to bottom right",
+    icon: "🚀",
+    gradientPosition: "100% 0%",
   },
   {
     title: "High quality responses within your control",
     description:
       "Review and coach the AI to improve accuracy and provide the best customer experience.",
-    gradientDirection: "to bottom",
+    icon: "🎯",
+    gradientPosition: "0% 100%",
   },
 ];
 
-const StackedSections: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [windowHeight, setWindowHeight] = useState(0);
-
-  useEffect(() => {
-    const handleResize = () => setWindowHeight(window.innerHeight);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+const Card: React.FC<{ section: Section; i: number }> = ({ section, i }) => {
+  const cardSize = 100 - i * 0.5; // Decrease size by 0.5% for each subsequent card
 
   return (
-    <div
-      ref={containerRef}
-      style={{ height: `${windowHeight * 3}px` }}
-      className="relative"
-    >
-      {sections.map((section, index) => (
-        <Section
-          key={index}
-          section={section}
-          index={index}
-          scrollYProgress={scrollYProgress}
-          windowHeight={windowHeight}
-          totalSections={sections.length}
+    <div className="h-screen flex items-center justify-center sticky top-0">
+      <motion.div
+        className="flex flex-col relative rounded-[25px] bg-black text-white overflow-hidden border-2 border-white"
+        style={{
+          width: `${cardSize}vw`,
+          height: `${cardSize}vh`,
+          maxWidth: "95vw", // Prevent overflow
+          maxHeight: "95vh", // Prevent overflow
+          position: "absolute",
+          top: `${50 + i * 1.25}%`,
+          left: "50%",
+          transform: `translate(-50%, -50%)`,
+          padding: `${5 - i * 0.5}rem`, // Decrease padding for smaller cards
+        }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(circle at ${section.gradientPosition}, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%)`,
+          }}
         />
-      ))}
+        <h2 className="text-center m-0 text-[28px] relative z-10">
+          {section.title}
+        </h2>
+        <div className="flex h-full mt-[50px] gap-[50px] relative z-10">
+          <div className="w-[40%] relative top-[10%]">
+            <p className="text-[16px] first-letter:text-[28px]">
+              {section.description}
+            </p>
+          </div>
+          <div className="relative w-[60%] h-full rounded-[25px] overflow-hidden">
+            <div className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#00FF00]" />
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 };
 
-const Section: React.FC<{
-  section: Section;
-  index: number;
-  scrollYProgress: any;
-  windowHeight: number;
-  totalSections: number;
-}> = ({ section, index, scrollYProgress, windowHeight, totalSections }) => {
-  const scale = 1 - index * 0.05;
-  const y = useTransform(
-    scrollYProgress,
-    [index / totalSections, (index + 1) / totalSections],
-    [windowHeight, 0]
-  );
-
-  const gapSize = `${(index + 1) * 1}vw`;
-
+const StackedSections: React.FC = () => {
   return (
-    <motion.div
-      className="top-0 left-0 right-0 bottom-0 flex items-center justify-center"
-      style={{ y }}
-    >
-      <motion.div
-        className="rounded-[25px] p-8 flex flex-col justify-center overflow-hidden"
-        style={{
-          background: `linear-gradient(${section.gradientDirection}, #8B5CF6, #FFA07A)`,
-          width: `calc(100% - ${gapSize})`,
-          height: `calc(98vh - ${gapSize})`,
-          scale: scale,
-        }}
-      >
-        <div className="flex flex-col md:flex-row h-full gap-8">
-          <div className="w-full md:w-2/5 flex flex-col justify-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-              {section.title}
-            </h2>
-            <p className="text-lg md:text-xl text-white">
-              {section.description}
-            </p>
-          </div>
-          <div className="w-full md:w-3/5 h-64 md:h-full relative rounded-2xl overflow-hidden">
-            <div className="w-full h-full bg-white bg-opacity-20 rounded-2xl" />
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
+    <div className="h-[300vh]">
+      {sections.map((section, i) => (
+        <Card key={i} i={i} section={section} />
+      ))}
+    </div>
   );
 };
 
