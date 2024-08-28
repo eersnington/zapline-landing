@@ -4,12 +4,14 @@ import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Lenis from "@studio-freight/lenis";
 import clsx from "clsx";
+import Image from "next/image";
 
 interface Section {
   title: string;
   description: string;
   icon: string;
   gradientPosition: string;
+  image?: string;
 }
 
 const sections: Section[] = [
@@ -19,6 +21,7 @@ const sections: Section[] = [
       "Create the knowledge base and connect your existing apps to build powerful, automated workflows.",
     icon: "⚡",
     gradientPosition: "50% 0%",
+    image: "/section1.png",
   },
   {
     title: "Full resolutions in under 1 minute",
@@ -26,6 +29,7 @@ const sections: Section[] = [
       "Our Voice AI communicates seamlessly between your apps, accessing and updating information in real-time.",
     icon: "🚀",
     gradientPosition: "100% 0%",
+    image: "/section2.png",
   },
   {
     title: "High quality responses within your control",
@@ -33,6 +37,7 @@ const sections: Section[] = [
       "Review and coach the AI to improve accuracy and provide the best customer experience.",
     icon: "🎯",
     gradientPosition: "0% 100%",
+    image: "/section3.png",
   },
 ];
 
@@ -68,10 +73,20 @@ const Card: React.FC<{ section: Section; i: number }> = ({ section, i }) => {
             <h2 className="text-4xl font-bold mb-6 leading-tight">
               {section.title}
             </h2>
-            <p className="text-lg leading-relaxed">{section.description}</p>
+            <p className="text-xl leading-relaxed">{section.description}</p>
           </div>
           <div className="relative w-[60%] h-full rounded-[25px] overflow-hidden">
-            <div className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#00FF00]" />
+            {section.image ? (
+              <Image
+                src={section.image}
+                alt={section.title}
+                layout="fill"
+                objectFit="cover"
+                priority={i === 0} // Load the first image with priority
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#00FF00]" />
+            )}
           </div>
         </div>
       </motion.div>
