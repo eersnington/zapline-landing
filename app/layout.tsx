@@ -36,19 +36,23 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <head />
       <body
-        className={clsx(
-          "min-h-screen bg-white font-sans antialiased",
-          Geist.className
-        )}
+        className={clsx("min-h-screen font-sans antialiased", Geist.className)}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <div className="relative flex flex-col min-h-screen">
-            <div className="w-full py-2 text-center font-bold text-white bg-gradient-to-r from-[#ffbe86] to-[#bc72f9] via-[#F97272]">
-              Launching in 2 days
+            <div className="w-full py-2 text-center font-bold text-white bg-black relative overflow-hidden">
+              <div
+                className="absolute inset-x-0 top-0 h-full"
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 0%, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%)",
+                  height: "200%",
+                  transform: "translateY(-50%)",
+                }}
+              ></div>
+              <span className="relative z-10">Launching in 2 days</span>
             </div>
-            <div className="bg-gradient-to-r from-[#fccde1] via-[#fcc2c2] to-[#e4befd]">
-              <Navbar />
-            </div>
+            <Navbar />
             <main className="flex-grow">{children}</main>
             <Footer />
           </div>

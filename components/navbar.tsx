@@ -17,17 +17,21 @@ export const Navbar = () => {
   return (
     <div className="w-full px-6 py-4">
       <NextUINavbar
-        className="bg-black text-white rounded-lg shadow-lg max-w-7xl mx-auto "
+        className="max-w-[1024px] mx-auto bg-black text-white rounded-full shadow-lg border border-gray-800"
         maxWidth="full"
+        style={{
+          backdropFilter: "blur(10px)",
+          backgroundColor: "rgba(0, 0, 0, 0.8)",
+        }}
       >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
             <NextLink
-              className="flex justify-start items-center gap-1"
+              className="flex justify-start items-center gap-2"
               href="/"
             >
               <Logo />
-              <p className="font-bold text-inherit">Zapline</p>
+              <p className="font-bold text-white text-xl">Zapline</p>
             </NextLink>
           </NavbarBrand>
         </NavbarContent>
@@ -35,13 +39,13 @@ export const Navbar = () => {
           className="hidden sm:flex basis-3/5 sm:basis-full"
           justify="center"
         >
-          <ul className="hidden lg:flex gap-4">
+          <ul className="hidden lg:flex gap-6">
             {siteConfig.navItems.map((item) => (
               <NavbarItem key={item.href}>
                 <NextLink
                   className={clsx(
                     linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-primary data-[active=true]:font-medium text-white"
+                    "data-[active=true]:font-medium text-white hover:text-[#E1FF41] rounded-full px-4 py-2 transition-colors text-lg"
                   )}
                   href={item.href}
                 >
@@ -58,7 +62,7 @@ export const Navbar = () => {
           <NavbarItem className="hidden md:flex">
             <Button
               as={Link}
-              className="text-sm font-normal text-black bg-[#ffbe86] hover:bg-[#ffcba4] rounded-lg"
+              className="text-base font-medium rounded-full bg-[#E1FF41] text-black hover:bg-white hover:text-black transition-colors px-6 py-3"
               href={siteConfig.links.waitlist}
               variant="flat"
             >
