@@ -21,7 +21,7 @@ export const Navbar = () => {
         maxWidth="full"
         style={{
           backdropFilter: "blur(10px)",
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
+          backgroundColor: "rgba(0, 0, 0, 1)",
         }}
       >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
