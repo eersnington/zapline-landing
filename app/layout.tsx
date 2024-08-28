@@ -49,7 +49,7 @@ export default function RootLayout({
                   height: "200%",
                   transform: "translateY(-50%)",
                 }}
-              ></div>
+              />
               <span className="relative z-10">Launching in 2 days</span>
             </div>
             <Navbar />

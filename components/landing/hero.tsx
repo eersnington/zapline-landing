@@ -43,7 +43,10 @@ export const Hero: React.FC = () => {
           minute—faster than any traditional chatbot.
         </h2>
         <div className="flex items-center justify-center mb-8 text-gray-600">
-          <Users className="mr-2 text-[#E1FF41]" size={24} />
+          <Users
+            className="mr-2 bg-black rounded-full text-[#E1FF41] p-2"
+            size={40}
+          />
           <span className="text-xl font-semibold">
             Join 149 store owners on the waitlist
           </span>

@@ -1,7 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import Lenis from "@studio-freight/lenis";
+import clsx from "clsx";
 
 interface Section {
   title: string;
@@ -35,22 +37,24 @@ const sections: Section[] = [
 ];
 
 const Card: React.FC<{ section: Section; i: number }> = ({ section, i }) => {
-  const cardSize = 100 - i * 0.5; // Decrease size by 0.5% for each subsequent card
+  const cardSize = 100 - i * 1; // Decrease size by 1% for each subsequent card
 
   return (
     <div className="h-screen flex items-center justify-center sticky top-0">
       <motion.div
-        className="flex flex-col relative rounded-[25px] bg-black text-white overflow-hidden border-2 border-white"
+        className={clsx(
+          "flex flex-col relative rounded-[25px] bg-black text-white overflow-hidden border-2 border-white"
+        )}
         style={{
           width: `${cardSize}vw`,
           height: `${cardSize}vh`,
-          maxWidth: "95vw", // Prevent overflow
-          maxHeight: "95vh", // Prevent overflow
+          maxWidth: "95vw",
+          maxHeight: "95vh",
           position: "absolute",
-          top: `${50 + i * 1.25}%`,
+          top: `${50 + i * 2.25}%`,
           left: "50%",
           transform: `translate(-50%, -50%)`,
-          padding: `${5 - i * 0.5}rem`, // Decrease padding for smaller cards
+          padding: `${5 - i * 0.5}rem`,
         }}
       >
         <div
@@ -59,14 +63,12 @@ const Card: React.FC<{ section: Section; i: number }> = ({ section, i }) => {
             background: `radial-gradient(circle at ${section.gradientPosition}, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%)`,
           }}
         />
-        <h2 className="text-center m-0 text-[28px] relative z-10">
-          {section.title}
-        </h2>
-        <div className="flex h-full mt-[50px] gap-[50px] relative z-10">
-          <div className="w-[40%] relative top-[10%]">
-            <p className="text-[16px] first-letter:text-[28px]">
-              {section.description}
-            </p>
+        <div className="flex h-full gap-8 relative z-10">
+          <div className="w-[40%] flex flex-col justify-center">
+            <h2 className="text-4xl font-bold mb-6 leading-tight">
+              {section.title}
+            </h2>
+            <p className="text-lg leading-relaxed">{section.description}</p>
           </div>
           <div className="relative w-[60%] h-full rounded-[25px] overflow-hidden">
             <div className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#00FF00]" />
@@ -78,8 +80,25 @@ const Card: React.FC<{ section: Section; i: number }> = ({ section, i }) => {
 };
 
 const StackedSections: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const lenis = new Lenis();
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   return (
-    <div className="h-[300vh]">
+    <div ref={containerRef} className="h-[300vh] mb-8">
       {sections.map((section, i) => (
         <Card key={i} i={i} section={section} />
       ))}

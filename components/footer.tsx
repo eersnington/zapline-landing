@@ -12,7 +12,7 @@ export const Footer = () => {
           <div className="flex flex-col items-start">
             <Logo />
             <p className="mt-2 text-sm">
-              Zapline - Revolutionizing your workflow
+              Zapline - Elevate your CX with AI-powered voicebot
             </p>
           </div>
           <div>
@@ -92,7 +92,7 @@ export const Footer = () => {
           </div>
           <Button
             as={Link}
-            className="mt-4 md:mt-0 text-sm font-normal text-black bg-[#ffbe86] hover:bg-[#ffcba4] rounded-lg"
+            className="text-base font-medium rounded-full bg-[#E1FF41] text-black hover:bg-white hover:text-black transition-colors px-6 py-3"
             href={siteConfig.links.waitlist}
             variant="flat"
           >
