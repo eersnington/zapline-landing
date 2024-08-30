@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Skeleton } from "@nextui-org/skeleton";
 
@@ -8,31 +8,41 @@ const benefits = [
   {
     title: "Automate 60% of Customer Queries",
     description: "Focus on what humans do best and let AI handle the rest",
+    video: "/vid1.mp4",
+    duration: 6000, // 5 seconds
   },
   {
     title: "Resolve Queries in <1min",
     description: "Respond to customer queries faster than ever before.",
+    duration: 3000, // 3 seconds
   },
   {
     title: "Built for E-commerce",
     description: "Tailored to the needs of handling support tickets.",
+    video: "/vid3.mp4",
+    duration: 9000, // 9 seconds
   },
   {
     title: "Predefined Actions for Smooth Operations",
     description: "Set up once and forget about repetitive tasks.",
+    video: "/vid4.mp4",
+    duration: 6000, // 6 seconds
   },
 ];
 
 export default function BenefitsShowcase() {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % benefits.length);
-    }, 4000);
-
-    return () => clearInterval(interval);
+  const advanceSlide = useCallback(() => {
+    setActiveIndex((prevIndex) => (prevIndex + 1) % benefits.length);
   }, []);
+
+  useEffect(() => {
+    const currentBenefit = benefits[activeIndex];
+    const timer = setTimeout(advanceSlide, currentBenefit.duration);
+
+    return () => clearTimeout(timer);
+  }, [activeIndex, advanceSlide]);
 
   return (
     <div className="w-full h-screen bg-black flex items-center justify-center rounded-[2.5rem]">
@@ -70,7 +80,18 @@ export default function BenefitsShowcase() {
                 initial={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <Skeleton className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#00FF00]" />
+                {benefits[activeIndex].video ? (
+                  <video
+                    className="w-full h-full object-cover"
+                    src={benefits[activeIndex].video}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  />
+                ) : (
+                  <Skeleton className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#00FF00]" />
+                )}
               </motion.div>
             </AnimatePresence>
           </div>
