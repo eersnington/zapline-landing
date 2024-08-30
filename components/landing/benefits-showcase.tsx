@@ -21,7 +21,8 @@ const benefits: Benefit[] = [
   {
     title: "Resolve Queries in <1min",
     description: "Respond to customer queries faster than ever before.",
-    duration: 4000, // 4 seconds
+    video: "/vid2.mp4",
+    duration: 9000, // 4 seconds,
   },
   {
     title: "Built for E-commerce",
