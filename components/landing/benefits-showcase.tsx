@@ -102,7 +102,7 @@ export default function BenefitsShowcase(): JSX.Element {
                     playsInline
                   />
                 ) : (
-                  <Skeleton className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#00FF00]" />
+                  <Skeleton className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#F0F68A]" />
                 )}
               </motion.div>
             </AnimatePresence>
