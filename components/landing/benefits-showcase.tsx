@@ -16,24 +16,24 @@ const benefits: Benefit[] = [
     title: "Automate 60% of Customer Queries",
     description: "Focus on what humans do best and let AI handle the rest",
     video: "/vid1.mp4",
-    duration: 5800,
+    duration: 6000,
   },
   {
     title: "Resolve Queries in <1min",
     description: "Respond to customer queries faster than ever before.",
-    duration: 3000, // 3 seconds
+    duration: 4000, // 4 seconds
   },
   {
     title: "Built for E-commerce",
     description: "Tailored to the needs of handling support tickets.",
     video: "/vid3.mp4",
-    duration: 8000,
+    duration: 8800,
   },
   {
     title: "Predefined Actions for Smooth Operations",
     description: "Set up once and forget about repetitive tasks.",
     video: "/vid4.mp4",
-    duration: 7500, // 6 seconds
+    duration: 8200,
   },
 ];
 
