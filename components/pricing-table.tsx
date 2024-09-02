@@ -80,6 +80,7 @@ export default function PricingTable(): JSX.Element {
   const zaplineCost = calculatePrice;
   const monthlySavings = supportAgentCost - zaplineCost;
   const timeSaved = ((numConversations * 6) / 60).toFixed(2); // in hours
+  const automationRate = 0.7; // 70% automation rate
 
   const handleConversationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -152,7 +153,7 @@ export default function PricingTable(): JSX.Element {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="text-center mb-4">
-              <p className="text-lg">Base price</p>
+              <p className="text-lg">You pay</p>
               <p className="text-4xl font-bold text-[#E1FF41]">
                 ${calculatePrice.toFixed(2)}
                 <span className="text-xl">/month</span>
@@ -165,24 +166,32 @@ export default function PricingTable(): JSX.Element {
             <p className="mb-2">
               <strong>Money saved:</strong> ${monthlySavings.toFixed(2)}
             </p>
+            <div className="mt-4 text-center">
+              <Link
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onOpen();
+                }}
+                className="text-primary hover:underline flex items-center justify-center"
+              >
+                <CopyIcon size={16} className="mr-2" />
+                How ROI is calculated?
+              </Link>
+            </div>
           </motion.div>
-        </div>
-
-        <div className="mt-8 text-center">
-          <Link href="#" onClick={onOpen}>
-            {/* This isn't together. I need it to be fixed*/}
-            <CopyIcon className="text-white" size={16} /> How ROI is calculated?
-          </Link>
         </div>
       </div>
 
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        size="3xl"
         classNames={{
-          body: "bg-gray-900 text-white",
-          header: "bg-gray-900 text-white",
-          footer: "bg-gray-900 text-white",
+          base: "bg-gray-900 text-white",
+          header: "border-b border-gray-700",
+          body: "py-6",
+          footer: "border-t border-gray-700",
         }}
       >
         <ModalContent>
@@ -192,19 +201,33 @@ export default function PricingTable(): JSX.Element {
                 ROI Calculation Explained
               </ModalHeader>
               <ModalBody>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-8">
                   <div>
                     <h4 className="font-bold mb-2">Without Zapline</h4>
-                    <table className="w-full">
+                    <table className="w-full border-collapse">
                       <tbody>
-                        <tr>
-                          <td>Support agent cost:</td>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">Conversations per month</td>
+                          <td className="text-right">{numConversations}</td>
+                        </tr>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">Time per conversation</td>
+                          <td className="text-right">6 minutes</td>
+                        </tr>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">Total time (hours)</td>
                           <td className="text-right">
-                            ${supportAgentCost.toFixed(2)}
+                            {((numConversations * 6) / 60).toFixed(2)}
                           </td>
                         </tr>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">
+                            Hourly rate for Support Agent
+                          </td>
+                          <td className="text-right">$25</td>
+                        </tr>
                         <tr className="font-bold text-red-500">
-                          <td>Total cost:</td>
+                          <td className="py-2">Total cost</td>
                           <td className="text-right">
                             ${supportAgentCost.toFixed(2)}
                           </td>
@@ -214,32 +237,80 @@ export default function PricingTable(): JSX.Element {
                   </div>
                   <div>
                     <h4 className="font-bold mb-2">With Zapline</h4>
-                    <table className="w-full">
+                    <table className="w-full border-collapse">
                       <tbody>
-                        <tr>
-                          <td>Zapline cost:</td>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">Conversations per month</td>
+                          <td className="text-right">{numConversations}</td>
+                        </tr>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">Automation rate</td>
+                          <td className="text-right">
+                            {automationRate * 100}%
+                          </td>
+                        </tr>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">Automated conversations</td>
+                          <td className="text-right">
+                            {Math.round(numConversations * automationRate)}
+                          </td>
+                        </tr>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">Manual conversations</td>
+                          <td className="text-right">
+                            {Math.round(
+                              numConversations * (1 - automationRate)
+                            )}
+                          </td>
+                        </tr>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">Manual time (hours)</td>
+                          <td className="text-right">
+                            {(
+                              (numConversations * (1 - automationRate) * 6) /
+                              60
+                            ).toFixed(2)}
+                          </td>
+                        </tr>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">Manual cost</td>
+                          <td className="text-right">
+                            $
+                            {(
+                              ((numConversations * (1 - automationRate) * 6) /
+                                60) *
+                              25
+                            ).toFixed(2)}
+                          </td>
+                        </tr>
+                        <tr className="border-b border-gray-700">
+                          <td className="py-2">Zapline cost</td>
                           <td className="text-right">
                             ${zaplineCost.toFixed(2)}
                           </td>
                         </tr>
                         <tr className="font-bold text-green-500">
-                          <td>Total cost:</td>
+                          <td className="py-2">Total cost</td>
                           <td className="text-right">
-                            ${zaplineCost.toFixed(2)}
+                            $
+                            {(
+                              zaplineCost +
+                              ((numConversations * (1 - automationRate) * 6) /
+                                60) *
+                                25
+                            ).toFixed(2)}
                           </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
-                <div className="mt-4">
-                  <p className="font-bold">
+                <div className="mt-6">
+                  <p className="font-bold text-lg">
                     Monthly savings: ${monthlySavings.toFixed(2)}
                   </p>
-                  <p>Time saved: {timeSaved} hours</p>
-                  <p className="text-sm mt-2">
-                    (Based on $25/hour and 6 minutes per conversation for
-                    support agents)
+                  <p className="font-bold text-lg">
+                    Time saved: {timeSaved} hours
                   </p>
                 </div>
               </ModalBody>
