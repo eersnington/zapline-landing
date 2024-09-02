@@ -153,11 +153,11 @@ export default function PricingTable(): JSX.Element {
             <h3 className="text-2xl font-bold mb-4 text-center">Monthly ROI</h3>
             <p className="mb-2">
               <strong>Time saved:</strong>{" "}
-              <span className="text-green-500">{timeSaved} hours</span>
+              <span className="text-[#E1FF41]">{timeSaved} hours</span>
             </p>
             <p className="mb-2">
               <strong>Money saved:</strong>{" "}
-              <span className="text-green-500">
+              <span className="text-[#E1FF41]">
                 {" "}
                 ${monthlySavings.toFixed(2)}
               </span>
