@@ -60,6 +60,7 @@ export default function PricingTable(): JSX.Element {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const currentTier = useMemo<PricingTier>(() => {
+    if (numConversations === 0) return pricingTiers[0];
     return (
       pricingTiers.find((tier) => numConversations <= tier.maxConversations) ||
       pricingTiers[0]
@@ -67,6 +68,7 @@ export default function PricingTable(): JSX.Element {
   }, [numConversations]);
 
   const calculatePrice = useMemo<number>(() => {
+    if (numConversations === 0) return currentTier.price;
     if (numConversations <= currentTier.conversations) {
       return currentTier.price;
     }
@@ -76,18 +78,11 @@ export default function PricingTable(): JSX.Element {
     return currentTier.price + additionalCost;
   }, [numConversations, currentTier]);
 
-  const supportAgentCost = ((numConversations * 6) / 60) * 25; // 6 minutes per conversation, $25/hour
+  const supportAgentCost = Math.max(((numConversations * 6) / 60) * 25, 0); // Ensure non-negative
   const zaplineCost = calculatePrice;
-  const monthlySavings = supportAgentCost - zaplineCost;
-  const timeSaved = ((numConversations * 6) / 60).toFixed(2); // in hours
+  const monthlySavings = Math.max(supportAgentCost - zaplineCost, 0); // Ensure non-negative
+  const timeSaved = Math.max((numConversations * 6) / 60, 0).toFixed(2); // Ensure non-negative
   const automationRate = 0.7; // 70% automation rate
-
-  const handleConversationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value >= 0) {
-      setNumConversations(value);
-    }
-  };
 
   return (
     <div className="w-full bg-black text-white py-16 px-4 rounded-xl">
@@ -99,19 +94,15 @@ export default function PricingTable(): JSX.Element {
         <div className="mb-12">
           <div className="text-xl mb-4 flex items-center justify-center">
             <span className="mr-2">Monthly conversations:</span>
-            <Input
-              type="number"
-              value={numConversations.toString()}
-              onChange={handleConversationChange}
-              min={0}
-              className="max-w-[150px] bg-transparent text-white"
-            />
+            <div className="bg-green-500 text-white px-4 py-2 rounded-full font-bold">
+              {numConversations}
+            </div>
           </div>
           <Slider
             aria-label="Conversations"
             color="success"
             size="lg"
-            step={1}
+            step={10}
             maxValue={10000}
             minValue={0}
             value={numConversations}
@@ -161,10 +152,15 @@ export default function PricingTable(): JSX.Element {
             </div>
             <h3 className="text-2xl font-bold mb-4 text-center">Monthly ROI</h3>
             <p className="mb-2">
-              <strong>Time saved:</strong> {timeSaved} hours
+              <strong>Time saved:</strong>{" "}
+              <span className="text-green-500">{timeSaved} hours</span>
             </p>
             <p className="mb-2">
-              <strong>Money saved:</strong> ${monthlySavings.toFixed(2)}
+              <strong>Money saved:</strong>{" "}
+              <span className="text-green-500">
+                {" "}
+                ${monthlySavings.toFixed(2)}
+              </span>
             </p>
             <div className="mt-4 text-center">
               <Link
