@@ -10,11 +10,11 @@ import {
 
 export const Hero: React.FC = () => {
   return (
-    <section className="flex flex-col items-center justify-between w-full max-h-screen px-4 py-4">
+    <section className="flex flex-col items-center justify-between w-full min-h-[10vh] max-h-[80vh] px-4">
       <div className="flex-grow flex flex-col items-center justify-center w-full max-w-5xl mx-auto text-center">
         <div className="mb-4 sm:mb-8">
           <div className="bg-black text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-3 max-w-fit">
-            <span className="text-xs sm:text-sm font-bold whitespace-nowrap">
+            <span className="text-sm sm:text-lg font-bold whitespace-nowrap">
               Automate 60% of your support
             </span>
             <Sparkles className="text-[#E1FF41] animate-pulse" size={24} />
@@ -24,7 +24,7 @@ export const Hero: React.FC = () => {
           className={titleStyles({
             size: "xl",
             class:
-              "text-black leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-8",
+              "text-black leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8",
           })}
         >
           Elevate your CX with an
@@ -34,7 +34,7 @@ export const Hero: React.FC = () => {
         <h2
           className={subtitleStyles({
             class:
-              "max-w-4xl mx-auto text-black text-base sm:text-base md:text-lg lg:text-xl mb-8 leading-relaxed",
+              "max-w-3xl mx-auto text-black text-lg sm:text-xl md:text-2xl lg:text-3xl mb-8 leading-relaxed",
           })}
         >
           Let customers simply talk to get instant help on your store. Our
