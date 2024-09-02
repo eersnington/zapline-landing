@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <div className="relative z-10">
-        <section className="flex flex-col items-center justify-center gap-8 py-20 md:py-32 px-4 text-center">
+        <section className="flex flex-col items-center justify-center gap-8 py-12 md:py-16 px-4 text-center">
           <Hero />
           <Briefer />
         </section>

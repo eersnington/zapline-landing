@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Slider } from "@nextui-org/slider";
 import { CopyIcon } from "lucide-react";
 import Link from "next/link";
-import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import {
   useDisclosure,
@@ -40,17 +39,17 @@ const pricingTiers: PricingTier[] = [
     maxConversations: 1999,
   },
   {
-    name: "Professional",
-    price: 1200,
+    name: "Advanced",
+    price: 860, //1200 previously
     conversations: 2000,
-    additional: 0.36,
+    additional: 0.4,
     maxConversations: 4999,
   },
   {
     name: "Enterprise",
-    price: 3000,
+    price: 1940, //3000 previously
     conversations: 5000,
-    additional: 0.36,
+    additional: 0.4,
     maxConversations: 10000,
   },
 ];
@@ -61,6 +60,7 @@ export default function PricingTable(): JSX.Element {
 
   const currentTier = useMemo<PricingTier>(() => {
     if (numConversations === 0) return pricingTiers[0];
+
     return (
       pricingTiers.find((tier) => numConversations <= tier.maxConversations) ||
       pricingTiers[0]
@@ -75,6 +75,7 @@ export default function PricingTable(): JSX.Element {
     const additionalConversations =
       numConversations - currentTier.conversations;
     const additionalCost = additionalConversations * currentTier.additional;
+
     return currentTier.price + additionalCost;
   }, [numConversations, currentTier]);
 
@@ -100,24 +101,24 @@ export default function PricingTable(): JSX.Element {
           </div>
           <Slider
             aria-label="Conversations"
+            className="max-w-md mx-auto"
             color="success"
-            size="lg"
-            step={10}
             maxValue={10000}
             minValue={0}
+            size="lg"
+            step={10}
             value={numConversations}
             onChange={(value: number | number[]) =>
               setNumConversations(Array.isArray(value) ? value[0] : value)
             }
-            className="max-w-md mx-auto"
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <motion.div
+            animate={{ opacity: 1, y: 0 }}
             className="bg-white/10 p-6 rounded-xl"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
             <h3 className="text-2xl font-bold mb-4">{currentTier.name} Plan</h3>
@@ -138,9 +139,9 @@ export default function PricingTable(): JSX.Element {
           </motion.div>
 
           <motion.div
+            animate={{ opacity: 1, y: 0 }}
             className="bg-white/10 p-6 rounded-xl"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="text-center mb-4">
@@ -164,14 +165,14 @@ export default function PricingTable(): JSX.Element {
             </p>
             <div className="mt-4 text-center">
               <Link
+                className="text-primary hover:underline flex items-center justify-center"
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
                   onOpen();
                 }}
-                className="text-primary hover:underline flex items-center justify-center"
               >
-                <CopyIcon size={16} className="mr-2" />
+                <CopyIcon className="mr-2" size={16} />
                 How ROI is calculated?
               </Link>
             </div>
@@ -180,15 +181,15 @@ export default function PricingTable(): JSX.Element {
       </div>
 
       <Modal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        size="3xl"
         classNames={{
           base: "bg-gray-900 text-white",
           header: "border-b border-gray-700",
           body: "py-6",
           footer: "border-t border-gray-700",
         }}
+        isOpen={isOpen}
+        size="3xl"
+        onOpenChange={onOpenChange}
       >
         <ModalContent>
           {(onClose) => (
