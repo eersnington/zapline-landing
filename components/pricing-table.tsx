@@ -28,26 +28,26 @@ const pricingTiers: PricingTier[] = [
     name: "Basic",
     price: 30,
     conversations: 50,
-    additional: 0.4,
+    additional: 0.7,
     maxConversations: 299,
   },
   {
     name: "Standard",
     price: 180,
     conversations: 300,
-    additional: 0.4,
+    additional: 0.6,
     maxConversations: 1999,
   },
   {
     name: "Advanced",
     price: 1200, //1200 previously 860
     conversations: 2000,
-    additional: 0.4,
+    additional: 0.5,
     maxConversations: 4999,
   },
   {
     name: "Enterprise",
-    price: 3000, //3000 previously 1940
+    price: 2500,
     conversations: 5000,
     additional: 0.4,
     maxConversations: 10000,
@@ -79,7 +79,7 @@ export default function PricingTable(): JSX.Element {
     return currentTier.price + additionalCost;
   }, [numConversations, currentTier]);
 
-  const supportAgentCost = Math.max(((numConversations * 6) / 60) * 25, 0); // Ensure non-negative
+  const supportAgentCost = Math.max(((numConversations * 6) / 60) * 30, 0); // Ensure non-negative
   const zaplineCost = calculatePrice;
   const monthlySavings = Math.max(supportAgentCost - zaplineCost, 0); // Ensure non-negative
   const timeSaved = Math.max((numConversations * 6) / 60, 0).toFixed(2); // Ensure non-negative
@@ -221,7 +221,7 @@ export default function PricingTable(): JSX.Element {
                           <td className="py-2">
                             Hourly rate for Support Agent
                           </td>
-                          <td className="text-right">$25</td>
+                          <td className="text-right">$30</td>
                         </tr>
                         <tr className="font-bold text-red-500">
                           <td className="py-2">Total cost</td>
@@ -276,7 +276,7 @@ export default function PricingTable(): JSX.Element {
                             {(
                               ((numConversations * (1 - automationRate) * 6) /
                                 60) *
-                              25
+                              30
                             ).toFixed(2)}
                           </td>
                         </tr>
@@ -294,7 +294,7 @@ export default function PricingTable(): JSX.Element {
                               zaplineCost +
                               ((numConversations * (1 - automationRate) * 6) /
                                 60) *
-                                25
+                                30
                             ).toFixed(2)}
                           </td>
                         </tr>
