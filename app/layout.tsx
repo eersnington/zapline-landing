@@ -53,7 +53,9 @@ export default function RootLayout({
                   transform: "translateY(-50%)",
                 }}
               />
-              <span className="relative z-10">Launching in 2 days</span>
+              <span className="relative z-10">
+                Launching in 16 days. Join the waitlist for pre-launch discount!
+              </span>
             </div>
             <Navbar />
             <main className="flex-grow">{children}</main>
