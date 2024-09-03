@@ -77,9 +77,7 @@ export default function AboutPage() {
                 className="rounded-full mb-4"
               />
               <h2 className="text-xl font-semibold">Sree Narayanan</h2>
-              <h3 className="text-lg text-gray-600 mb-2">
-                Co-Founder & Technical Lead
-              </h3>
+              <h3 className="text-lg text-gray-600 mb-2">Co-Founder & CTO</h3>
               <Link
                 href="https://www.linkedin.com/in/sreenington/"
                 target="_blank"

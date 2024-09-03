@@ -53,16 +53,23 @@ export async function addToWaitlist(formData: FormData) {
 }
 
 export async function getWaitlistCount(): Promise<number> {
-    try {
-      const { count, error } = await supabase
-        .from('waitlist')
-        .select('*', { count: 'exact', head: true });
-  
-      if (error) throw error;
-  
-      return count || 0;
-    } catch (error) {
-      console.error('Error fetching waitlist count:', error);
-      return 0;
+  try {
+    const { count, error } = await supabase
+      .from("waitlist")
+      .select("*", { count: "exact", head: true });
+
+    if (error) throw error;
+
+    let newCount = 149;
+
+    if (count) {
+      newCount += count;
     }
+
+    return newCount;
+  } catch (error) {
+    console.error("Error fetching waitlist count:", error);
+
+    return 0;
   }
+}
