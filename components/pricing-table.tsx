@@ -83,7 +83,7 @@ export default function PricingTable(): JSX.Element {
   const zaplineCost = calculatePrice;
   const monthlySavings = Math.max(supportAgentCost - zaplineCost, 0); // Ensure non-negative
   const timeSaved = Math.max((numConversations * 6) / 60, 0).toFixed(2); // Ensure non-negative
-  const automationRate = 0.7; // 70% automation rate
+  const automationRate = 0.6; // 60% automation rate
 
   return (
     <div className="w-full bg-black text-white py-16 px-4 rounded-xl">

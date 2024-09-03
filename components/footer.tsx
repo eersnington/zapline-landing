@@ -21,7 +21,7 @@ export const Footer = () => {
               {siteConfig.navItems.map((item) => (
                 <li key={item.href}>
                   <Link
-                    className="text-sm hover:text-[#ffbe86]"
+                    className="text-sm hover:text-[#E1FF41]"
                     href={item.href}
                   >
                     {item.label}
@@ -34,17 +34,17 @@ export const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Company</h3>
             <ul className="space-y-2">
               <li>
-                <Link className="text-sm hover:text-[#ffbe86]" href="/about">
+                <Link className="text-sm hover:text-[#E1FF41]" href="/about">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link className="text-sm hover:text-[#ffbe86]" href="/careers">
+                <Link className="text-sm hover:text-[#E1FF41]" href="/careers">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link className="text-sm hover:text-[#ffbe86]" href="/blog">
+                <Link className="text-sm hover:text-[#E1FF41]" href="/blog">
                   Blog
                 </Link>
               </li>
@@ -55,7 +55,8 @@ export const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  className="text-sm hover:text-[#ffbe86]"
+                  target="_blank"
+                  className="text-sm hover:text-[#E1FF41]"
                   href={siteConfig.links.twitter}
                 >
                   Twitter
@@ -63,7 +64,8 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  className="text-sm hover:text-[#ffbe86]"
+                  target="_blank"
+                  className="text-sm hover:text-[#E1FF41]"
                   href={siteConfig.links.linkedin}
                 >
                   LinkedIn

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Skeleton } from "@nextui-org/skeleton";
 
@@ -22,7 +22,7 @@ const benefits: Benefit[] = [
     title: "Resolve Queries in <1min",
     description: "Respond to customer queries faster than ever before.",
     video: "/vid2.mp4",
-    duration: 9000, // 4 seconds,
+    duration: 9000,
   },
   {
     title: "Built for E-commerce",
@@ -40,6 +40,8 @@ const benefits: Benefit[] = [
 
 export default function BenefitsShowcase(): JSX.Element {
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const advanceSlide = useCallback(() => {
     setActiveIndex((prevIndex) => (prevIndex + 1) % benefits.length);
@@ -52,8 +54,27 @@ export default function BenefitsShowcase(): JSX.Element {
     return () => clearTimeout(timer);
   }, [activeIndex, advanceSlide]);
 
+  useEffect(() => {
+    setIsVideoLoaded(false);
+    if (videoRef.current) {
+      videoRef.current.load();
+    }
+  }, [activeIndex]);
+
   const handleCardClick = (index: number): void => {
     setActiveIndex(index);
+  };
+
+  const handleVideoLoaded = () => {
+    setIsVideoLoaded(true);
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  };
+
+  const handleVideoError = () => {
+    console.error("Video failed to load");
+    setIsVideoLoaded(false);
   };
 
   return (
@@ -94,14 +115,22 @@ export default function BenefitsShowcase(): JSX.Element {
                 transition={{ duration: 0.5 }}
               >
                 {benefits[activeIndex].video ? (
-                  <video
-                    className="w-full h-full object-cover"
-                    src={benefits[activeIndex].video}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                  />
+                  isVideoLoaded ? (
+                    <video
+                      key={activeIndex}
+                      ref={videoRef}
+                      className="w-full h-full object-cover"
+                      src={benefits[activeIndex].video}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      onLoadedData={handleVideoLoaded}
+                      onError={handleVideoError}
+                    />
+                  ) : (
+                    <Skeleton className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#F0F68A]" />
+                  )
                 ) : (
                   <Skeleton className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#F0F68A]" />
                 )}
