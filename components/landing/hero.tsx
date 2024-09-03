@@ -1,14 +1,61 @@
-import React from "react";
+"use client";
+
+import React, { useState, useTransition, Suspense } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Sparkles, Users } from "lucide-react";
-
 import {
   title as titleStyles,
   subtitle as subtitleStyles,
 } from "@/components/primitives";
+import { addToWaitlist, getWaitlistCount } from "@/app/_actions/waitlist";
+
+const WaitlistCount = () => {
+  const [count, setCount] = React.useState<number | null>(null);
+
+  React.useEffect(() => {
+    const fetchCount = async () => {
+      const newCount = await getWaitlistCount();
+      setCount(newCount);
+    };
+
+    fetchCount();
+
+    const handleUpdate = () => fetchCount();
+    window.addEventListener("waitlistUpdated", handleUpdate);
+
+    return () => window.removeEventListener("waitlistUpdated", handleUpdate);
+  }, []);
+
+  return (
+    <span className="text-lg sm:text-xl font-semibold">
+      Join {count === null ? "..." : count} store owner{count !== 1 ? "s" : ""}{" "}
+      on the waitlist
+    </span>
+  );
+};
 
 export const Hero: React.FC = () => {
+  const [message, setMessage] = useState("");
+  const [isPending, startTransition] = useTransition();
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("email", email);
+      const result = await addToWaitlist(formData);
+      setMessage(result.message);
+      if (!result.message.includes("Error")) {
+        setEmail("");
+        // Trigger a re-render of the WaitlistCount component
+        const event = new Event("waitlistUpdated");
+        window.dispatchEvent(event);
+      }
+    });
+  };
+
   return (
     <section className="flex flex-col items-center justify-between w-full min-h-[10vh] max-h-[80vh] px-4">
       <div className="flex-grow flex flex-col items-center justify-center w-full max-w-5xl mx-auto text-center">
@@ -46,29 +93,53 @@ export const Hero: React.FC = () => {
             className="mr-2 bg-black rounded-full text-[#E1FF41] p-2"
             size={32}
           />
-          <span className="text-lg sm:text-xl font-semibold">
-            Join 149 store owners on the waitlist
-          </span>
+          <Suspense
+            fallback={
+              <span className="text-lg sm:text-xl font-semibold">
+                Join ... store owners on the waitlist
+              </span>
+            }
+          >
+            <WaitlistCount />
+          </Suspense>
         </div>
       </div>
       <div className="w-full max-w-3xl mx-auto">
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+        >
           <Input
+            required
             className="w-full sm:w-[400px] text-base sm:text-lg"
+            color="primary"
+            name="email"
             placeholder="Enter your work email"
+            radius="full"
             size="lg"
             type="email"
-            color="primary"
-            radius="full"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Button
             className="bg-[#E1FF41] text-black hover:bg-black hover:text-white px-6 py-3 sm:px-10 sm:py-7 text-lg sm:text-xl font-semibold rounded-full transition-colors"
+            disabled={isPending}
             size="lg"
+            type="submit"
             variant="flat"
           >
-            Get Notified
+            {isPending ? "Submitting..." : "Get Notified"}
           </Button>
-        </div>
+        </form>
+        {message && (
+          <p
+            className={`mt-4 text-center ${
+              message.includes("Error") ? "text-red-500" : "text-green-500"
+            }`}
+          >
+            {message}
+          </p>
+        )}
       </div>
     </section>
   );

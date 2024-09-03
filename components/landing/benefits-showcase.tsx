@@ -112,3 +112,9 @@ export default function BenefitsShowcase(): JSX.Element {
     </div>
   );
 }
+
+/*
+
+Error playing video: AbortError: The play() request was interrupted because video-only background media was paused to save power. https://goo.gl/LdLk22
+
+*/
