@@ -1,8 +1,9 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + NextUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Zapline AI",
+  description:
+    "Give your brand a Voice. Elevate your CX with AI-powered Voice Support.",
   navItems: [
     {
       label: "Home",
