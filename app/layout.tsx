@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 import { GeistSans as Geist } from "geist/font/sans";
+import { Analytics } from "@vercel/analytics/react";
 
 import { Providers } from "./providers";
 
@@ -39,6 +40,8 @@ export default function RootLayout({
         className={clsx("min-h-screen font-sans antialiased", Geist.className)}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+          <Analytics />
+
           <div className="relative flex flex-col min-h-screen">
             <div className="w-full py-2 text-center font-bold text-white bg-black relative overflow-hidden">
               <div
