@@ -40,14 +40,14 @@ const pricingTiers: PricingTier[] = [
   },
   {
     name: "Advanced",
-    price: 860, //1200 previously
+    price: 1200, //1200 previously 860
     conversations: 2000,
     additional: 0.4,
     maxConversations: 4999,
   },
   {
     name: "Enterprise",
-    price: 1940, //3000 previously
+    price: 3000, //3000 previously 1940
     conversations: 5000,
     additional: 0.4,
     maxConversations: 10000,

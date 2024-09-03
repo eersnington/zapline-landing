@@ -1,13 +1,11 @@
 "use client";
-
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Skeleton } from "@nextui-org/skeleton";
 
 interface Benefit {
   title: string;
   description: string;
-  video?: string;
+  video: string;
   duration: number;
 }
 
@@ -40,42 +38,24 @@ const benefits: Benefit[] = [
 
 export default function BenefitsShowcase(): JSX.Element {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const advanceSlide = useCallback(() => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % benefits.length);
-  }, []);
-
   useEffect(() => {
-    const currentBenefit = benefits[activeIndex];
-    const timer = setTimeout(advanceSlide, currentBenefit.duration);
+    const timer = setTimeout(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % benefits.length);
+    }, benefits[activeIndex].duration);
 
     return () => clearTimeout(timer);
-  }, [activeIndex, advanceSlide]);
-
-  useEffect(() => {
-    setIsVideoLoaded(false);
-    if (videoRef.current) {
-      videoRef.current.load();
-    }
   }, [activeIndex]);
 
-  const handleCardClick = (index: number): void => {
-    setActiveIndex(index);
-  };
-
-  const handleVideoLoaded = () => {
-    setIsVideoLoaded(true);
+  useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play();
+      videoRef.current.load();
+      videoRef.current
+        .play()
+        .catch((error) => console.error("Error playing video:", error));
     }
-  };
-
-  const handleVideoError = () => {
-    console.error("Video failed to load");
-    setIsVideoLoaded(false);
-  };
+  }, [activeIndex]);
 
   return (
     <div className="w-full min-h-screen bg-black flex items-center justify-center rounded-[2.5rem]">
@@ -92,9 +72,7 @@ export default function BenefitsShowcase(): JSX.Element {
                   ? "bg-white/10 backdrop-blur-sm border-l-4 border-[#E1FF41]"
                   : "bg-white/5 backdrop-blur-sm hover:bg-white/15"
               }`}
-              initial={{ opacity: 0.7 }}
-              transition={{ duration: 0.5 }}
-              onClick={() => handleCardClick(index)}
+              onClick={() => setActiveIndex(index)}
             >
               <h3 className="text-2xl font-semibold mb-3 text-white">
                 {benefit.title}
@@ -108,32 +86,24 @@ export default function BenefitsShowcase(): JSX.Element {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
-                animate={{ opacity: 1 }}
-                className="w-full h-full"
-                exit={{ opacity: 0 }}
                 initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
+                className="w-full h-full"
               >
-                {benefits[activeIndex].video ? (
-                  isVideoLoaded ? (
-                    <video
-                      key={activeIndex}
-                      ref={videoRef}
-                      className="w-full h-full object-cover"
-                      src={benefits[activeIndex].video}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      onLoadedData={handleVideoLoaded}
-                      onError={handleVideoError}
-                    />
-                  ) : (
-                    <Skeleton className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#F0F68A]" />
-                  )
-                ) : (
-                  <Skeleton className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#F0F68A]" />
-                )}
+                <video
+                  ref={videoRef}
+                  key={benefits[activeIndex].video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src={benefits[activeIndex].video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </motion.div>
             </AnimatePresence>
           </div>
