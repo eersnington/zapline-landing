@@ -68,14 +68,16 @@ const Card: React.FC<{ section: Section; i: number }> = ({ section, i }) => {
             background: `radial-gradient(circle at ${section.gradientPosition}, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%)`,
           }}
         />
-        <div className="flex h-full gap-8 relative z-10">
-          <div className="w-[40%] flex flex-col justify-center">
-            <h2 className="text-4xl font-bold mb-6 leading-tight">
+        <div className="flex flex-col md:flex-row h-full gap-8 relative z-10">
+          <div className="w-full md:w-[40%] flex flex-col justify-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 leading-tight">
               {section.title}
             </h2>
-            <p className="text-xl leading-relaxed">{section.description}</p>
+            <p className="text-lg md:text-xl leading-relaxed">
+              {section.description}
+            </p>
           </div>
-          <div className="relative w-[60%] h-full rounded-[25px] overflow-hidden">
+          <div className="relative w-full md:w-[60%] h-[35%]  md:h-full rounded-[25px] overflow-hidden mt-4 md:mt-0">
             {section.image ? (
               <Image
                 src={section.image}
