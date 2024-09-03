@@ -17,8 +17,8 @@ export const siteConfig = {
       href: "/video",
     },
     {
-      label: "Share",
-      href: "/share",
+      label: "About Us",
+      href: "/about",
     },
   ],
   navMenuItems: [
