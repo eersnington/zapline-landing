@@ -43,11 +43,11 @@ export const Footer = () => {
                   Careers
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link className="text-sm hover:text-[#E1FF41]" href="/blog">
                   Blog
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div>
