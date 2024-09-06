@@ -59,7 +59,7 @@ export default function RootLayout({
                   }}
                 />
                 <span className="relative z-10">
-                  Launching in 16 days. Join the waitlist for pre-launch
+                  Launching in 15 days. Join the waitlist for pre-launch
                   discount!
                 </span>
               </div>
