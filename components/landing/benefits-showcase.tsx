@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePostHog } from "posthog-js/react";
 
 interface Benefit {
   title: string;
@@ -40,7 +41,11 @@ export default function BenefitsShowcase(): JSX.Element {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  const posthog = usePostHog();
+
   useEffect(() => {
+    posthog.capture("viewed_benefits_videos");
+
     const timer = setTimeout(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % benefits.length);
     }, benefits[activeIndex].duration);
@@ -86,15 +91,15 @@ export default function BenefitsShowcase(): JSX.Element {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
-                initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
                 className="w-full h-full"
+                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
               >
                 <video
-                  ref={videoRef}
                   key={benefits[activeIndex].video}
+                  ref={videoRef}
                   autoPlay
                   loop
                   muted

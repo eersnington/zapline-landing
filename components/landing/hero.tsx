@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState, useTransition, Suspense } from "react";
+import React, { useState, useTransition, Suspense, useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Sparkles, Users } from "lucide-react";
+import { usePostHog } from "posthog-js/react";
+
 import {
   title as titleStyles,
   subtitle as subtitleStyles,
@@ -16,12 +18,14 @@ const WaitlistCount = () => {
   React.useEffect(() => {
     const fetchCount = async () => {
       const newCount = await getWaitlistCount();
+
       setCount(newCount);
     };
 
     fetchCount();
 
     const handleUpdate = () => fetchCount();
+
     window.addEventListener("waitlistUpdated", handleUpdate);
 
     return () => window.removeEventListener("waitlistUpdated", handleUpdate);
@@ -39,18 +43,28 @@ export const Hero: React.FC = () => {
   const [message, setMessage] = useState("");
   const [isPending, startTransition] = useTransition();
   const [email, setEmail] = useState("");
+  const posthog = usePostHog();
+
+  useEffect(() => {
+    posthog.capture("viewed_hero_landing");
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     startTransition(async () => {
       const formData = new FormData();
+
       formData.append("email", email);
       const result = await addToWaitlist(formData);
+
+      posthog.capture("submitted_waitlist");
+
       setMessage(result.message);
       if (!result.message.includes("Error")) {
         setEmail("");
         // Trigger a re-render of the WaitlistCount component
         const event = new Event("waitlistUpdated");
+
         window.dispatchEvent(event);
       }
     });
@@ -106,8 +120,8 @@ export const Hero: React.FC = () => {
       </div>
       <div className="w-full max-w-3xl mx-auto">
         <form
-          onSubmit={handleSubmit}
           className="flex flex-col sm:flex-row gap-4 justify-center"
+          onSubmit={handleSubmit}
         >
           <Input
             required

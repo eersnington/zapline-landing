@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Slider } from "@nextui-org/slider";
 import { CopyIcon } from "lucide-react";
@@ -14,6 +14,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@nextui-org/modal";
+import { usePostHog } from "posthog-js/react";
 
 interface PricingTier {
   name: string;
@@ -57,6 +58,11 @@ const pricingTiers: PricingTier[] = [
 export default function PricingTable(): JSX.Element {
   const [numConversations, setNumConversations] = useState<number>(50);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const posthog = usePostHog();
+
+  useEffect(() => {
+    posthog.capture("viewed_pricing_page");
+  }, []);
 
   const currentTier = useMemo<PricingTier>(() => {
     if (numConversations === 0) return pricingTiers[0];
@@ -258,7 +264,7 @@ export default function PricingTable(): JSX.Element {
                           <td className="py-2">Manual conversations</td>
                           <td className="text-right">
                             {Math.round(
-                              numConversations * (1 - automationRate)
+                              numConversations * (1 - automationRate),
                             )}
                           </td>
                         </tr>

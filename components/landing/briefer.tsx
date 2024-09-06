@@ -6,15 +6,15 @@ import { ThumbsUp, ThumbsDown, Tag, Package, RotateCcw } from "lucide-react";
 const VideoFrame = ({ height, width }: { height: number; width: number }) => (
   <div className="w-full h-full relative bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
     <video
-      className="absolute top-0 left-0 w-full h-full object-cover"
-      src="/zap2.0-demo-vod-final.mp4"
-      width={width}
-      height={height}
-      muted
       autoPlay
-      loop
       controls
+      loop
+      muted
+      className="absolute top-0 left-0 w-full h-full object-cover"
+      height={height}
+      src="/zap2.0-demo-vod-final.mp4"
       style={{ maxWidth: `${width}px`, maxHeight: `${height}px` }}
+      width={width}
     />
   </div>
 );
@@ -110,6 +110,7 @@ export const Briefer = () => {
     const updateDimensions = () => {
       const containerWidth = Math.min(window.innerWidth * 0.66, 960); // 2/3 of the window width, max 1600px
       const containerHeight = Math.min(containerWidth * (10 / 16), 600); // 16:10 aspect ratio, max height 1000px
+
       setContainerDimensions({
         width: containerWidth,
         height: containerHeight,
@@ -118,6 +119,7 @@ export const Briefer = () => {
 
     updateDimensions();
     window.addEventListener("resize", updateDimensions);
+
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 

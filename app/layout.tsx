@@ -9,6 +9,7 @@ import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
+import { PHProvider } from "@/components/posthog-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -36,33 +37,39 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <head />
-      <body
-        className={clsx("min-h-screen font-sans antialiased", Geist.className)}
-      >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
-          <Analytics />
+      <PHProvider>
+        <body
+          className={clsx(
+            "min-h-screen font-sans antialiased",
+            Geist.className
+          )}
+        >
+          <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+            <Analytics />
 
-          <div className="relative flex flex-col min-h-screen">
-            <div className="w-full py-2 text-center font-bold text-white bg-black relative overflow-hidden">
-              <div
-                className="absolute inset-x-0 top-0 h-full"
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 0%, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%)",
-                  height: "200%",
-                  transform: "translateY(-50%)",
-                }}
-              />
-              <span className="relative z-10">
-                Launching in 16 days. Join the waitlist for pre-launch discount!
-              </span>
+            <div className="relative flex flex-col min-h-screen">
+              <div className="w-full py-2 text-center font-bold text-white bg-black relative overflow-hidden">
+                <div
+                  className="absolute inset-x-0 top-0 h-full"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 50% 0%, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%)",
+                    height: "200%",
+                    transform: "translateY(-50%)",
+                  }}
+                />
+                <span className="relative z-10">
+                  Launching in 16 days. Join the waitlist for pre-launch
+                  discount!
+                </span>
+              </div>
+              <Navbar />
+              <main className="flex-grow">{children}</main>
+              <Footer />
             </div>
-            <Navbar />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-          </div>
-        </Providers>
-      </body>
+          </Providers>
+        </body>
+      </PHProvider>
     </html>
   );
 }

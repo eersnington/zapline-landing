@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Lenis from "@studio-freight/lenis";
 import clsx from "clsx";
 import Image from "next/image";
+import { usePostHog } from "posthog-js/react";
 
 interface Section {
   title: string;
@@ -80,11 +81,11 @@ const Card: React.FC<{ section: Section; i: number }> = ({ section, i }) => {
           <div className="relative w-full md:w-[60%] h-[35%]  md:h-full rounded-[25px] overflow-hidden mt-4 md:mt-0">
             {section.image ? (
               <Image
-                src={section.image}
                 alt={section.title}
                 layout="fill"
                 objectFit="cover"
                 priority={i === 0} // Load the first image with priority
+                src={section.image}
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-[#E1FF41] to-[#00FF00]" />
@@ -99,8 +100,12 @@ const Card: React.FC<{ section: Section; i: number }> = ({ section, i }) => {
 const StackedSections: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const posthog = usePostHog();
+
   useEffect(() => {
     const lenis = new Lenis();
+
+    posthog.capture("viewed_scroller_section");
 
     function raf(time: number) {
       lenis.raf(time);
