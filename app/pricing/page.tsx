@@ -27,7 +27,7 @@ export default async function PricingPage() {
 
   console.log("User IP:", ip);
 
-  const userLoc = "IN"; //await fetchUserLocation(ip);
+  const userLoc = await fetchUserLocation(ip);
 
   console.log("User Location:", userLoc);
 
