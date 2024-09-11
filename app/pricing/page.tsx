@@ -4,13 +4,9 @@ import { title } from "@/components/primitives";
 import PricingTable from "@/components/pricing-table";
 import PricingTableIndian from "@/components/pricing-table-indian";
 
-interface LocationData {
-  country_code: string;
-}
-
 const fetchUserLocation = async (): Promise<string | null> => {
   try {
-    const response = await axios.get<LocationData>("https://ipapi.co/json/");
+    const response = await axios.get("https://ipapi.co/json/");
 
     console.log("User IP data:", response.data);
 
@@ -25,7 +21,7 @@ const fetchUserLocation = async (): Promise<string | null> => {
 export default async function PricingPage() {
   const userLoc = await fetchUserLocation();
 
-  console.log(userLoc);
+  console.log("User Location:", userLoc);
 
   return (
     <div>
