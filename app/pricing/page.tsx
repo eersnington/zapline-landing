@@ -1,11 +1,16 @@
 import axios from "axios";
 
-import PricingTable from "@/components/pricing-table";
 import { title } from "@/components/primitives";
+import PricingTable from "@/components/pricing-table";
+import PricingTableIndian from "@/components/pricing-table-indian";
 
-const fetchUserLocation = async () => {
+interface LocationData {
+  country_code: string;
+}
+
+const fetchUserLocation = async (): Promise<string | null> => {
   try {
-    const response = await axios.get("https://ipapi.co/json/");
+    const response = await axios.get<LocationData>("https://ipapi.co/json/");
 
     console.log("User IP data:", response.data);
 
@@ -26,7 +31,11 @@ export default async function PricingPage() {
     <div>
       <h1 className={title()}>Pricing</h1>
       <div className="my-12" />
-      <PricingTable />
+      {userLoc === "IN" || userLoc === "AE" ? (
+        <PricingTableIndian />
+      ) : (
+        <PricingTable />
+      )}
     </div>
   );
 }
