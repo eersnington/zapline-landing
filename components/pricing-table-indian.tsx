@@ -149,7 +149,7 @@ export default function PricingTableIndian(): JSX.Element {
                 included
               </li>
               <li>
-                ✅ ₹{currentTier.additional.toFixed(2)} per additional
+                ✅ {formatIndianPrice(currentTier.additional)} per additional
                 conversation
               </li>
               <li>✅ Helpdesk</li>
@@ -246,7 +246,9 @@ export default function PricingTableIndian(): JSX.Element {
                           <td className="py-2">
                             Hourly rate for Support Agent
                           </td>
-                          <td className="text-right">₹{hourlyWage}</td>
+                          <td className="text-right">
+                            {formatIndianPrice(hourlyWage)}
+                          </td>
                         </tr>
                         <tr className="font-bold text-red-500">
                           <td className="py-2">Total cost</td>
