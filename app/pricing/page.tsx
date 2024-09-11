@@ -4,6 +4,8 @@ import { title } from "@/components/primitives";
 import PricingTable from "@/components/pricing-table";
 import PricingTableIndian from "@/components/pricing-table-indian";
 
+export const dynamic = "force-dynamic";
+
 const fetchUserLocation = async (): Promise<string | null> => {
   try {
     const response = await axios.get("https://ipapi.co/json/");
