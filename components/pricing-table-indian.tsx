@@ -55,6 +55,16 @@ const pricingTiers: PricingTier[] = [
   },
 ];
 
+const formatIndianPrice = (num: number): string => {
+  const formatted = num.toLocaleString("en-IN", {
+    maximumFractionDigits: 0,
+    style: "currency",
+    currency: "INR",
+  });
+
+  return formatted.replace("₹", "₹ "); // Add a space after the rupee symbol
+};
+
 export default function PricingTableIndian(): JSX.Element {
   const [numConversations, setNumConversations] = useState<number>(50);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -86,8 +96,9 @@ export default function PricingTableIndian(): JSX.Element {
   }, [numConversations, currentTier]);
 
   const hourlyWage = 130; // Hourly wage for Indian customer support rep in rupees
+  const timePerTicket = 30; // 30 mins to resolve a ticket
   const supportAgentCost = Math.max(
-    ((numConversations * 6) / 60) * hourlyWage,
+    ((numConversations * timePerTicket) / 60) * hourlyWage,
     0
   );
   const zaplineCost = calculatePrice;
@@ -157,7 +168,7 @@ export default function PricingTableIndian(): JSX.Element {
             <div className="text-center mb-4">
               <p className="text-lg">You pay</p>
               <p className="text-4xl font-bold text-[#E1FF41]">
-                ₹{calculatePrice.toFixed(2)}
+                {formatIndianPrice(calculatePrice)}
                 <span className="text-xl">/month</span>
               </p>
             </div>
@@ -172,7 +183,7 @@ export default function PricingTableIndian(): JSX.Element {
               <strong>Money saved:</strong>{" "}
               <span className="text-[#E1FF41] font-bold">
                 {" "}
-                ₹{monthlySavings.toFixed(2)}
+                {formatIndianPrice(monthlySavings)}
               </span>
             </p>
             <div className="mt-4 text-center">
@@ -221,7 +232,9 @@ export default function PricingTableIndian(): JSX.Element {
                         </tr>
                         <tr className="border-b border-gray-700">
                           <td className="py-2">Time per conversation</td>
-                          <td className="text-right">6 minutes</td>
+                          <td className="text-right">
+                            {timePerTicket} minutes
+                          </td>
                         </tr>
                         <tr className="border-b border-gray-700">
                           <td className="py-2">Total time (hours)</td>
@@ -238,7 +251,7 @@ export default function PricingTableIndian(): JSX.Element {
                         <tr className="font-bold text-red-500">
                           <td className="py-2">Total cost</td>
                           <td className="text-right">
-                            ₹{supportAgentCost.toFixed(2)}
+                            {formatIndianPrice(supportAgentCost)}
                           </td>
                         </tr>
                       </tbody>
@@ -284,30 +297,28 @@ export default function PricingTableIndian(): JSX.Element {
                         <tr className="border-b border-gray-700">
                           <td className="py-2">Manual cost</td>
                           <td className="text-right">
-                            ₹
-                            {(
+                            {formatIndianPrice(
                               ((numConversations * (1 - automationRate) * 6) /
                                 60) *
-                              30
-                            ).toFixed(2)}
+                                hourlyWage
+                            )}
                           </td>
                         </tr>
                         <tr className="border-b border-gray-700">
                           <td className="py-2">Zapline cost</td>
                           <td className="text-right">
-                            ₹{zaplineCost.toFixed(2)}
+                            {formatIndianPrice(zaplineCost)}
                           </td>
                         </tr>
                         <tr className="font-bold text-green-500">
                           <td className="py-2">Total cost</td>
                           <td className="text-right">
-                            ₹
-                            {(
+                            {formatIndianPrice(
                               zaplineCost +
-                              ((numConversations * (1 - automationRate) * 6) /
-                                60) *
-                                30
-                            ).toFixed(2)}
+                                ((numConversations * (1 - automationRate) * 6) /
+                                  60) *
+                                  hourlyWage
+                            )}
                           </td>
                         </tr>
                       </tbody>
@@ -316,7 +327,7 @@ export default function PricingTableIndian(): JSX.Element {
                 </div>
                 <div className="mt-6">
                   <p className="font-bold text-lg">
-                    Monthly savings: ₹{monthlySavings.toFixed(2)}
+                    Monthly savings: {formatIndianPrice(monthlySavings)}
                   </p>
                   <p className="font-bold text-lg">
                     Time saved: {timeSaved} hours

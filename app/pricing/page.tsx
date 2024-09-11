@@ -7,9 +7,9 @@ import PricingTableIndian from "@/components/pricing-table-indian";
 
 export const dynamic = "force-dynamic";
 
-const fetchUserLocation = async (): Promise<string | null> => {
+const fetchUserLocation = async (ip: string): Promise<string | null> => {
   try {
-    const response = await axios.get("https://ipapi.co/json/");
+    const response = await axios.get(`https://ipapi.co/${ip}/json/`);
 
     console.log("User IP data:", response.data);
 
@@ -23,15 +23,13 @@ const fetchUserLocation = async (): Promise<string | null> => {
 
 export default async function PricingPage() {
   const headersList = headers();
-  const ip = headersList.get("x-forwarded-for") || "121.0.0.1";
+  const ip = headersList.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
 
   console.log("User IP:", ip);
 
-  const userLoc = "IN";
+  const userLoc = "IN"; //await fetchUserLocation(ip);
 
-  // const userLoc = await fetchUserLocation();
-
-  // console.log("User Location:", userLoc);
+  console.log("User Location:", userLoc);
 
   return (
     <div>
