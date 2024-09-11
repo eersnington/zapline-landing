@@ -13,7 +13,7 @@ const fetchUserLocation = async (ip: string): Promise<string | null> => {
 
     console.log("User IP data:", response.data);
 
-    return response.data.country_code;
+    return response.data.country_code || "IN";
   } catch (error) {
     console.error("Error fetching location:", error);
 
