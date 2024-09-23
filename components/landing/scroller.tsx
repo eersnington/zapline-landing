@@ -105,7 +105,17 @@ const StackedSections: React.FC = () => {
   useEffect(() => {
     const lenis = new Lenis();
 
-    posthog.capture("viewed_scroller_section");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            posthog.capture("viewed_scroller_section");
+            observer.disconnect(); // Disconnect after first view
+          }
+        });
+      },
+      { threshold: 0.5 } // Trigger when 50% of the element is visible
+    );
 
     function raf(time: number) {
       lenis.raf(time);

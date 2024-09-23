@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ThumbsUp, ThumbsDown, Tag, Package, RotateCcw } from "lucide-react";
+import { usePostHog } from "posthog-js/react";
 
 const VideoFrame = ({ height, width }: { height: number; width: number }) => (
   <div className="w-full h-full relative bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
@@ -106,6 +107,33 @@ export const Briefer = () => {
     height: 0,
   });
 
+  const posthog = usePostHog();
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            posthog.capture("viewed_briefer_demo");
+            observer.disconnect(); // Disconnect after first view
+          }
+        });
+      },
+      { threshold: 0.5 } // Trigger when 50% of the element is visible
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      if (heroRef.current) {
+        observer.unobserve(heroRef.current);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const updateDimensions = () => {
       const containerWidth = Math.min(window.innerWidth * 0.66, 960); // 2/3 of the window width, max 1600px
@@ -124,7 +152,10 @@ export const Briefer = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-[1600px] mx-auto mt-8 md:mt-16 lg:mt-24 px-4">
+    <div
+      ref={heroRef}
+      className="w-full max-w-[1600px] mx-auto mt-8 md:mt-16 lg:mt-24 px-4"
+    >
       <div className="flex flex-col md:flex-row items-stretch justify-center gap-4 md:gap-6 lg:gap-8">
         <div
           className="w-full md:w-2/3"

@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useTransition, Suspense, useEffect } from "react";
+import React, {
+  useState,
+  useTransition,
+  Suspense,
+  useEffect,
+  useRef,
+} from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Sparkles, Users } from "lucide-react";
@@ -44,9 +50,30 @@ export const Hero: React.FC = () => {
   const [isPending, startTransition] = useTransition();
   const [email, setEmail] = useState("");
   const posthog = usePostHog();
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    posthog.capture("viewed_hero_landing");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            posthog.capture("viewed_hero_landing");
+            observer.disconnect(); // Disconnect after first view
+          }
+        });
+      },
+      { threshold: 0.5 } // Trigger when 50% of the element is visible
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      if (heroRef.current) {
+        observer.unobserve(heroRef.current);
+      }
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -71,7 +98,10 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-between w-full min-h-[10vh] max-h-[80vh] px-4">
+    <section
+      ref={heroRef}
+      className="flex flex-col items-center justify-between w-full min-h-[10vh] max-h-[80vh] px-4"
+    >
       <div className="flex-grow flex flex-col items-center justify-center w-full max-w-5xl mx-auto text-center">
         <div className="mb-4 sm:mb-8">
           <div className="bg-black text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-3 max-w-fit">

@@ -42,10 +42,33 @@ export default function BenefitsShowcase(): JSX.Element {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const posthog = usePostHog();
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    posthog.capture("viewed_benefits_videos");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            posthog.capture("viewed_benefits_videos");
+            observer.disconnect(); // Disconnect after first view
+          }
+        });
+      },
+      { threshold: 0.5 } // Trigger when 50% of the element is visible
+    );
 
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      if (heroRef.current) {
+        observer.unobserve(heroRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % benefits.length);
     }, benefits[activeIndex].duration);
@@ -63,7 +86,10 @@ export default function BenefitsShowcase(): JSX.Element {
   }, [activeIndex]);
 
   return (
-    <div className="w-full min-h-screen bg-black flex items-center justify-center rounded-[2.5rem]">
+    <div
+      ref={heroRef}
+      className="w-full min-h-screen bg-black flex items-center justify-center rounded-[2.5rem]"
+    >
       <div className="w-full h-full flex flex-col lg:flex-row justify-between items-center p-8 gap-8">
         <div className="w-full lg:w-1/2 h-full overflow-y-auto pr-4 lg:pr-8">
           {benefits.map((benefit, index) => (
