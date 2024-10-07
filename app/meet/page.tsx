@@ -80,7 +80,10 @@ export default function BookMeetingPage() {
             <div className="space-y-8">
               <div>
                 <h1 className="text-4xl lg:text-6xl font-bold text-black mb-6">
-                  Ready to revolutionize your customer support?
+                  Ready to take your CX to a{" "}
+                  <span className="text-[#E1FF41] bg-black rounded-md px-2 py-1">
+                    whole new level?
+                  </span>
                 </h1>
                 <p className="text-xl text-gray-600">
                   Book a personalized demo to see how our AI voicebot can
