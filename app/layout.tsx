@@ -48,7 +48,7 @@ export default function RootLayout({
             <Analytics />
 
             <div className="relative flex flex-col min-h-screen">
-              <div className="w-full py-2 text-center font-bold text-white bg-black relative overflow-hidden">
+              {/* <div className="w-full py-2 text-center font-bold text-white bg-black relative overflow-hidden">
                 <div
                   className="absolute inset-x-0 top-0 h-full"
                   style={{
@@ -62,7 +62,7 @@ export default function RootLayout({
                   Launching in 15 days. Join the waitlist for pre-launch
                   discount!
                 </span>
-              </div>
+              </div> */}
               <Navbar />
               <main className="flex-grow">{children}</main>
               <Footer />

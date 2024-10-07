@@ -8,8 +8,7 @@ import React, {
   useRef,
 } from "react";
 import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { Sparkles, Users } from "lucide-react";
+import { Calendar, Mic, Sparkles, Users } from "lucide-react";
 import { usePostHog } from "posthog-js/react";
 
 import {
@@ -17,6 +16,7 @@ import {
   subtitle as subtitleStyles,
 } from "@/components/primitives";
 import { addToWaitlist, getWaitlistCount } from "@/app/_actions/waitlist";
+import Link from "next/link";
 
 const WaitlistCount = () => {
   const [count, setCount] = React.useState<number | null>(null);
@@ -149,41 +149,28 @@ export const Hero: React.FC = () => {
         </div>
       </div>
       <div className="w-full max-w-3xl mx-auto">
-        <form
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-          onSubmit={handleSubmit}
-        >
-          <Input
-            required
-            className="w-full sm:w-[400px] text-base sm:text-lg"
-            color="primary"
-            name="email"
-            placeholder="Enter your work email"
-            radius="full"
-            size="lg"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Button
-            className="bg-[#E1FF41] text-black hover:bg-black hover:text-white px-6 py-3 sm:px-10 sm:py-7 text-lg sm:text-xl font-semibold rounded-full transition-colors"
-            disabled={isPending}
-            size="lg"
-            type="submit"
-            variant="flat"
-          >
-            {isPending ? "Submitting..." : "Get Notified"}
-          </Button>
-        </form>
-        {message && (
-          <p
-            className={`mt-4 text-center ${
-              message.includes("Error") ? "text-red-500" : "text-green-500"
-            }`}
-          >
-            {message}
-          </p>
-        )}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link href="/meet" className="w-full sm:w-auto">
+            <Button
+              className="w-full bg-[#E1FF41] text-black hover:bg-black hover:text-[#E1FF41] px-6 py-3 sm:px-10 sm:py-7 text-lg sm:text-xl font-semibold rounded-full transition-colors"
+              size="lg"
+              onClick={() => posthog.capture("clicked_book_call")}
+            >
+              <Calendar className="mr-2" size={24} />
+              Book a Call
+            </Button>
+          </Link>
+          <Link href="https://demo.zaplineai.com" className="w-full sm:w-auto">
+            <Button
+              className="w-full bg-black text-white hover:bg-[#E1FF41] hover:text-black px-6 py-3 sm:px-10 sm:py-7 text-lg sm:text-xl font-semibold rounded-full transition-colors"
+              size="lg"
+              onClick={() => posthog.capture("clicked_try_demo")}
+            >
+              <Mic className="mr-2" size={24} />
+              Try Demo Now
+            </Button>
+          </Link>
+        </div>
       </div>
     </section>
   );

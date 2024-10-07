@@ -95,10 +95,10 @@ export const Footer = () => {
           <Button
             as={Link}
             className="text-base font-medium rounded-full bg-[#E1FF41] text-black hover:bg-white hover:text-black transition-colors px-6 py-3"
-            href={siteConfig.links.waitlist}
+            href={siteConfig.links.demo}
             variant="flat"
           >
-            Join Waitlist
+            Try on demo store
           </Button>
         </div>
       </div>

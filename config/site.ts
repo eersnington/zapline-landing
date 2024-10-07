@@ -21,6 +21,10 @@ export const siteConfig = {
       label: "About Us",
       href: "/about",
     },
+    {
+      label: "Book a Call",
+      href: "/meet",
+    },
   ],
   navMenuItems: [
     {
@@ -59,6 +63,6 @@ export const siteConfig = {
   links: {
     twitter: "https://twitter.com/zaplineai",
     linkedin: "https://www.linkedin.com/company/zaplineai/",
-    waitlist: "/waitlist",
+    demo: "https://demo.zaplineai.com/",
   },
 };
