@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useTransition } from "react";
-import { Calendar, Sparkles } from "lucide-react";
+import { Calendar, Sparkles, Phone, Mail, Clock } from "lucide-react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
+import { addToWaitlist } from "../_actions/waitlist";
 
 export default function BookMeetingPage() {
   const [email, setEmail] = useState("");
@@ -12,63 +13,127 @@ export default function BookMeetingPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     startTransition(async () => {
-      // Replace with your actual booking logic
-      setTimeout(() => {
-        setMessage("Thanks! We'll be in touch shortly to schedule your demo.");
+      const formData = new FormData();
+      formData.append("email", email);
+
+      const result = await addToWaitlist(formData);
+
+      console.log(result);
+
+      setMessage("Thanks! We'll be in touch shortly to schedule your demo.");
+      setEmail("");
+      if (!result.message.includes("Error")) {
         setEmail("");
-      }, 1500);
+      }
     });
   };
 
   return (
-    <section className="flex flex-col items-center justify-between w-full min-h-[10vh] max-h-[80vh] px-4">
-      <div className="flex-grow flex flex-col items-center justify-center w-full max-w-5xl mx-auto text-center">
-        <div className="mb-4 sm:mb-8">
-          <div className="bg-black text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-3 max-w-fit">
-            <span className="text-sm sm:text-lg font-bold whitespace-nowrap">
-              Book a Demo
-            </span>
-            <Sparkles className="text-[#E1FF41] animate-pulse" size={24} />
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <div className="container mx-auto px-4 py-12 lg:py-24">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
+          {/* Left side - Form */}
+          <div className="w-full lg:w-1/2 order-2 lg:order-1">
+            <div className="bg-black rounded-3xl p-8 lg:p-12">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="mb-8">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-[#E1FF41] mb-2">
+                    Book Your Demo
+                  </h2>
+                  <p className="text-gray-400">
+                    See how our Alexa-like voicebot transforms customer support
+                  </p>
+                </div>
+                <Input
+                  required
+                  className="w-full"
+                  classNames={{
+                    input: "bg-gray-900 text-white placeholder-gray-400",
+                    inputWrapper: "bg-gray-900",
+                  }}
+                  placeholder="Enter your work email"
+                  radius="full"
+                  size="lg"
+                  startContent={<Mail className="text-gray-400" size={20} />}
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Button
+                  className="w-full bg-[#E1FF41] text-black hover:bg-white hover:text-black px-6 py-7 text-lg font-semibold rounded-full transition-colors"
+                  disabled={isPending}
+                  size="lg"
+                  type="submit"
+                >
+                  {isPending ? "Scheduling..." : "Schedule Demo"}
+                </Button>
+                {message && (
+                  <p className="mt-4 text-center text-[#E1FF41]">{message}</p>
+                )}
+              </form>
+            </div>
+          </div>
+
+          {/* Right side - Info */}
+          <div className="w-full lg:w-1/2 order-1 lg:order-2">
+            <div className="space-y-8">
+              <div>
+                <h1 className="text-4xl lg:text-6xl font-bold text-black mb-6">
+                  Ready to revolutionize your customer support?
+                </h1>
+                <p className="text-xl text-gray-600">
+                  Book a personalized demo to see how our AI voicebot can
+                  transform your customer experience
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="bg-black rounded-full p-3">
+                    <Clock className="text-[#E1FF41]" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold mb-1">
+                      Quick Requirements Check
+                    </h3>
+                    <p className="text-gray-600">
+                      We&apos;ll ask a few questions to understand your needs
+                      and where our voicebot can help
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div className="bg-black rounded-full p-3">
+                    <Phone className="text-[#E1FF41]" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold mb-1">
+                      Live Interaction
+                    </h3>
+                    <p className="text-gray-600">
+                      Try our voicebot and see the magic happen in real-time
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="bg-black rounded-full p-3">
+                    <Sparkles className="text-[#E1FF41]" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold mb-1">
+                      Tailored to You
+                    </h3>
+                    <p className="text-gray-600">
+                      See specific use cases for your business needs
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <h1 className="text-black leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8">
-          Experience the Future of CX
-        </h1>
-        <h2 className="max-w-3xl mx-auto text-black text-lg sm:text-xl md:text-2xl lg:text-3xl mb-8 leading-relaxed">
-          See how our Alexa-like voicebot can automate 60% of your support and
-          transform your customer experience.
-        </h2>
       </div>
-      <div className="w-full max-w-3xl mx-auto">
-        <form
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-          onSubmit={handleSubmit}
-        >
-          <Input
-            required
-            className="w-full sm:w-[400px] text-base sm:text-lg"
-            color="primary"
-            name="email"
-            placeholder="Enter your work email"
-            radius="full"
-            size="lg"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Button
-            className="bg-[#E1FF41] text-black hover:bg-black hover:text-white px-6 py-3 sm:px-10 sm:py-7 text-lg sm:text-xl font-semibold rounded-full transition-colors"
-            disabled={isPending}
-            size="lg"
-            type="submit"
-          >
-            {isPending ? "Scheduling..." : "Book Demo"}
-          </Button>
-        </form>
-        {message && (
-          <p className="mt-4 text-center text-green-500">{message}</p>
-        )}
-      </div>
-    </section>
+    </div>
   );
 }
