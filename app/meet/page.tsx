@@ -20,10 +20,11 @@ export default function BookMeetingPage() {
 
       console.log(result);
 
-      setMessage("Thanks! We'll be in touch shortly to schedule your demo.");
-      setEmail("");
       if (!result.message.includes("Error")) {
+        setMessage("Thanks! We'll be in touch shortly to schedule your demo.");
         setEmail("");
+      } else {
+        setMessage(result.message);
       }
     });
   };
@@ -48,13 +49,13 @@ export default function BookMeetingPage() {
                   required
                   className="w-full"
                   classNames={{
-                    input: "bg-gray-900 text-white placeholder-gray-400",
-                    inputWrapper: "bg-gray-900",
+                    input: "bg-gray-400 text-white placeholder-gray-200",
+                    inputWrapper: "bg-gray-200",
                   }}
                   placeholder="Enter your work email"
                   radius="full"
                   size="lg"
-                  startContent={<Mail className="text-gray-400" size={20} />}
+                  startContent={<Mail className="text-gray-800" size={20} />}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

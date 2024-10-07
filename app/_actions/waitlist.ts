@@ -60,7 +60,7 @@ export async function getWaitlistCount(): Promise<number> {
 
     if (error) throw error;
 
-    let newCount = 34;
+    let newCount = 17;
 
     if (count) {
       newCount += count;
