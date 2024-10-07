@@ -86,8 +86,8 @@ export default function BookMeetingPage() {
                   </span>
                 </h1>
                 <p className="text-xl text-gray-600">
-                  Book a personalized demo to see how our AI voicebot can
-                  transform your customer experience
+                  Book a call to see how our AI voicebot can transform your
+                  customer support and save you time and money.
                 </p>
               </div>
 
