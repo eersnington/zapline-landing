@@ -132,7 +132,7 @@ export const Hero: React.FC = () => {
           Alexa-like voicebot delivers complete resolutions in under a
           minute—faster than any traditional chatbot.
         </h2>
-        <div className="flex items-center justify-center mb-6 text-gray-600">
+        {/* <div className="flex items-center justify-center mb-6 text-gray-600">
           <Users
             className="mr-2 bg-black rounded-full text-[#E1FF41] p-2"
             size={32}
@@ -146,7 +146,7 @@ export const Hero: React.FC = () => {
           >
             <WaitlistCount />
           </Suspense>
-        </div>
+        </div> */}
       </div>
       <div className="w-full max-w-3xl mx-auto">
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
