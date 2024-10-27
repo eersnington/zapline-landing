@@ -1,77 +1,26 @@
-"use client";
-import React, { useState, useTransition } from "react";
-import { Calendar, Sparkles, Phone, Mail, Clock } from "lucide-react";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { addToWaitlist } from "../_actions/waitlist";
+import { Sparkles, Phone, Clock } from "lucide-react";
+import CalendarIframe from "./_components/google-calender";
 
 export default function BookMeetingPage() {
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [isPending, startTransition] = useTransition();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    startTransition(async () => {
-      const formData = new FormData();
-      formData.append("email", email);
-
-      const result = await addToWaitlist(formData);
-
-      console.log(result);
-
-      if (!result.message.includes("Error")) {
-        setMessage("Thanks! We'll be in touch shortly to schedule your demo.");
-        setEmail("");
-      } else {
-        setMessage(result.message);
-      }
-    });
-  };
+  const calendarUrl =
+    "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3YiuvY6Mll7n9XFCJOlo2urjka3hB2n03HnGRpEe3Klr3FQtRRA4C8avvZrlAS9WRvjs0VtJdr?gv=true";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4 py-12 lg:py-24">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
-          {/* Left side - Form */}
+          {/* Left side - Calendar */}
           <div className="w-full lg:w-1/2 order-2 lg:order-1">
             <div className="bg-black rounded-3xl p-8 lg:p-12">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="mb-8">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-[#E1FF41] mb-2">
-                    Book Your Demo
-                  </h2>
-                  <p className="text-gray-400">
-                    See how our Alexa-like voicebot transforms customer support
-                  </p>
-                </div>
-                <Input
-                  required
-                  className="w-full"
-                  classNames={{
-                    input: "bg-gray-400 text-white placeholder-gray-200",
-                    inputWrapper: "bg-gray-200",
-                  }}
-                  placeholder="Enter your work email"
-                  radius="full"
-                  size="lg"
-                  startContent={<Mail className="text-gray-800" size={20} />}
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <Button
-                  className="w-full bg-[#E1FF41] text-black hover:bg-white hover:text-black px-6 py-7 text-lg font-semibold rounded-full transition-colors"
-                  disabled={isPending}
-                  size="lg"
-                  type="submit"
-                >
-                  {isPending ? "Scheduling..." : "Schedule Demo"}
-                </Button>
-                {message && (
-                  <p className="mt-4 text-center text-[#E1FF41]">{message}</p>
-                )}
-              </form>
+              <div className="mb-8">
+                <h2 className="text-2xl lg:text-3xl font-bold text-[#E1FF41] mb-2">
+                  Book Your Demo
+                </h2>
+                <p className="text-gray-400">
+                  Choose a time that works best for you
+                </p>
+              </div>
+              <CalendarIframe calendarUrl={calendarUrl} />
             </div>
           </div>
 
