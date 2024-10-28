@@ -118,9 +118,9 @@ export const Hero: React.FC = () => {
               "text-black leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8",
           })}
         >
-          Elevate your CX with an
+          Deliver fast resolutions
           <br />
-          Alexa-like Voicebot
+          and upsell with Voice AI
         </h1>
         <h2
           className={subtitleStyles({
@@ -128,9 +128,8 @@ export const Hero: React.FC = () => {
               "max-w-3xl mx-auto text-black text-lg sm:text-xl md:text-2xl lg:text-3xl mb-8 leading-relaxed",
           })}
         >
-          Let customers simply talk to get instant help on your store. Our
-          Alexa-like voicebot delivers complete resolutions in under a
-          minute—faster than any traditional chatbot.
+          Let customers talk with our smart voice assistant for instant support
+          and personalized upsells.
         </h2>
         {/* <div className="flex items-center justify-center mb-6 text-gray-600">
           <Users
