@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  useState,
-  useTransition,
-  Suspense,
-  useEffect,
-  useRef,
-} from "react";
+import React, { useState, useTransition, useEffect, useRef } from "react";
 import { Button } from "@nextui-org/button";
 import { Calendar, Mic, Sparkles, Users } from "lucide-react";
 import { usePostHog } from "posthog-js/react";

@@ -1,5 +1,6 @@
 import { Sparkles, Phone, Clock } from "lucide-react";
 import CalendarIframe from "./_components/google-calender";
+import TrustedBy from "@/components/landing/trusted-by";
 
 export default function BookMeetingPage() {
   const calendarUrl =
@@ -8,16 +9,17 @@ export default function BookMeetingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4 py-12 lg:py-24">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center mb-8">
           {/* Left side - Calendar */}
           <div className="w-full lg:w-1/2 order-2 lg:order-1">
             <div className="bg-black rounded-3xl p-8 lg:p-12">
               <div className="mb-8">
                 <h2 className="text-2xl lg:text-3xl font-bold text-[#E1FF41] mb-2">
-                  Book Your Demo
+                  Book a brief intro call with the founders
                 </h2>
                 <p className="text-gray-400">
-                  Choose a time that works best for you
+                  Pick a time that works for a quick look at how Zapline AI can
+                  boost your support and revenue—no prep needed.
                 </p>
               </div>
               <CalendarIframe calendarUrl={calendarUrl} />
@@ -35,8 +37,9 @@ export default function BookMeetingPage() {
                   </span>
                 </h1>
                 <p className="text-xl text-gray-600">
-                  Book a call to see how our AI voicebot can transform your
-                  customer support and save you time and money.
+                  We&apos;ll walk you through Zapline&apos;s features in a
+                  quick, no-strings-attached demo. You&apos;ll see how it can
+                  ease support and increase sales without lifting a finger.
                 </p>
               </div>
 
@@ -47,11 +50,11 @@ export default function BookMeetingPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-1">
-                      Quick Requirements Check
+                      Quick Intro to Break the Ice
                     </h3>
                     <p className="text-gray-600">
-                      We&apos;ll ask a few questions to understand your needs
-                      and where our voicebot can help
+                      Just a friendly chat to get to know your brand and see
+                      where our voicebot could make an impact.
                     </p>
                   </div>
                 </div>
@@ -62,10 +65,11 @@ export default function BookMeetingPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-1">
-                      Live Interaction
+                      Live Demo, Real Results
                     </h3>
                     <p className="text-gray-600">
-                      Try our voicebot and see the magic happen in real-time
+                      See our voicebot in action, responding to typical customer
+                      scenarios with speed and accuracy.
                     </p>
                   </div>
                 </div>
@@ -75,10 +79,12 @@ export default function BookMeetingPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-1">
-                      Tailored to You
+                      Post-Call Report
                     </h3>
                     <p className="text-gray-600">
-                      See specific use cases for your business needs
+                      After our call, we’ll send a summary report highlighting
+                      potential impact areas and next steps tailored to your
+                      brand.
                     </p>
                   </div>
                 </div>
@@ -86,6 +92,7 @@ export default function BookMeetingPage() {
             </div>
           </div>
         </div>
+        <TrustedBy />
       </div>
     </div>
   );
