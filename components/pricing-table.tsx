@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Slider } from "@nextui-org/slider";
-import { CopyIcon } from "lucide-react";
+import { Check, CopyIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import {
@@ -129,18 +129,39 @@ export default function PricingTable(): JSX.Element {
           >
             <h3 className="text-2xl font-bold mb-4">{currentTier.name} Plan</h3>
             <ul className="space-y-2">
-              <li>
-                ✅ Up to {currentTier.conversations} conversations/month
-                included
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-green-500" />
+                <span>
+                  Up to {currentTier.conversations} conversations/month included
+                </span>
               </li>
-              <li>
-                ✅ ${currentTier.additional.toFixed(2)} per additional
-                conversation
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-green-500" />
+                <span>
+                  ${currentTier.additional.toFixed(2)} per additional
+                  conversation
+                </span>
               </li>
-              <li>✅ Helpdesk</li>
-              <li>✅ Transcription Analysis</li>
-              <li>✅ Conversation Analytics</li>
-              <li>✅ 30+ integrations</li>
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-green-500" />
+                <span>Helpdesk</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-green-500" />
+                <span>Transcription Analysis</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-green-500" />
+                <span>Conversation Analytics</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-green-500" />
+                <span>30+ integrations</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-green-500" />
+                <span>Unlimited upselling</span>
+              </li>
             </ul>
           </motion.div>
 
@@ -264,7 +285,7 @@ export default function PricingTable(): JSX.Element {
                           <td className="py-2">Manual conversations</td>
                           <td className="text-right">
                             {Math.round(
-                              numConversations * (1 - automationRate),
+                              numConversations * (1 - automationRate)
                             )}
                           </td>
                         </tr>
