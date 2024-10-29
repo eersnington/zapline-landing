@@ -7,8 +7,9 @@ export default function BookMeetingPage() {
     "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3YiuvY6Mll7n9XFCJOlo2urjka3hB2n03HnGRpEe3Klr3FQtRRA4C8avvZrlAS9WRvjs0VtJdr?gv=true";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      <div className="container mx-auto px-4 py-12 lg:py-24">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 rounded-2xl">
+      <TrustedBy />
+      <div className="container mx-auto px-4 py-12 lg:py-16">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center mb-8">
           {/* Left side - Calendar */}
           <div className="w-full lg:w-1/2 order-2 lg:order-1">
@@ -92,7 +93,6 @@ export default function BookMeetingPage() {
             </div>
           </div>
         </div>
-        <TrustedBy />
       </div>
     </div>
   );
