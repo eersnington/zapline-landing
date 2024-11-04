@@ -100,7 +100,7 @@ export const Hero: React.FC = () => {
         <div className="mb-4 sm:mb-8">
           <div className="bg-black text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-3 max-w-fit">
             <span className="text-sm sm:text-lg font-bold whitespace-nowrap">
-              Automate 60% of your support
+              Over 16k responses generated!
             </span>
             <Sparkles className="text-[#E1FF41] animate-pulse" size={24} />
           </div>
@@ -112,9 +112,7 @@ export const Hero: React.FC = () => {
               "text-black leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8",
           })}
         >
-          Deliver fast resolutions
-          <br />
-          and upsell with Voice AI
+          Always-On, Natural Voice AI <br /> for your Customers
         </h1>
         <h2
           className={subtitleStyles({
