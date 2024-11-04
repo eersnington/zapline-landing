@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, ShieldCheck } from "lucide-react";
 import { usePostHog } from "posthog-js/react";
 
 const pricingTiers = [
@@ -66,9 +66,21 @@ export default function PricingTable() {
   return (
     <div className="w-full bg-white py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold mb-8 text-center">
-          Simple, transparent pricing
-        </h2>
+        <div className="mb-16 text-center">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <ShieldCheck className="w-8 h-8 text-green-500" />
+            <span className="bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-medium">
+              Risk-free trial
+            </span>
+          </div>
+          <h2 className="text-4xl font-bold mb-3 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
+            14-Day Money Back Guarantee
+          </h2>
+          <p className="text-gray-600 max-w-xl mx-auto">
+            Try ZaplineAI risk-free. If you&apos;re not completely satisfied,
+            we&apos;ll refund your purchase no questions asked.
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {pricingTiers.map((tier, index) => (
