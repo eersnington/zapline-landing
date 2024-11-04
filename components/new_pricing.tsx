@@ -103,7 +103,18 @@ export default function PricingTable() {
                   </ul>
                 </div>
 
-                <button className="mt-8 w-full bg-[#E1FF41] text-black py-3 rounded-full font-semibold hover:opacity-90 transition-opacity">
+                <button
+                  onClick={() => {
+                    const subject = encodeURIComponent(
+                      `Inquiry about ZaplineAI ${tier.name} Plan`
+                    );
+                    const body = encodeURIComponent(
+                      `Hello,\n\nI'm interested in the ${tier.name} Plan on ZaplineAI and would like to get started.\n\nCould you please provide me with further details?\n\nBest Regards,`
+                    );
+                    window.location.href = `mailto:support@zaplineai.com?subject=${subject}&body=${body}`;
+                  }}
+                  className="mt-8 w-full bg-[#E1FF41] text-black py-3 rounded-full font-semibold hover:opacity-90 transition-opacity"
+                >
                   Get Started
                 </button>
               </div>
