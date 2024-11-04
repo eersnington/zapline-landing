@@ -70,15 +70,15 @@ export default function PricingTable() {
           <div className="flex items-center justify-center gap-2 mb-4">
             <ShieldCheck className="w-8 h-8 text-green-500" />
             <span className="bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-medium">
-              Risk-free trial
+              100% satisfaction guaranteed
             </span>
           </div>
           <h2 className="text-4xl font-bold mb-3 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-            14-Day Money Back Guarantee
+            Try ZaplineAI Today
           </h2>
           <p className="text-gray-600 max-w-xl mx-auto">
-            Try ZaplineAI risk-free. If you&apos;re not completely satisfied,
-            we&apos;ll refund your purchase no questions asked.
+            Your satisfaction is our priority. We&apos; immediate refund within
+            14 days if ZaplineAI isn&apos;t the perfect fit for your business.
           </p>
         </div>
 
