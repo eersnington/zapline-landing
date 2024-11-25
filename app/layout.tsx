@@ -2,7 +2,6 @@ import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 import { GeistSans as Geist } from "geist/font/sans";
-import { Analytics } from "@vercel/analytics/react";
 
 import { Providers } from "./providers";
 
@@ -10,6 +9,7 @@ import { siteConfig } from "@/config/site";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { PHProvider } from "@/components/posthog-provider";
+import { PlausibleAnalytics } from "./plausible";
 
 export const metadata: Metadata = {
   title: {
@@ -44,9 +44,8 @@ export default function RootLayout({
             Geist.className
           )}
         >
+          <PlausibleAnalytics />
           <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
-            <Analytics />
-
             <div className="relative flex flex-col min-h-screen">
               {/* <div className="w-full py-2 text-center font-bold text-white bg-black relative overflow-hidden">
                 <div
